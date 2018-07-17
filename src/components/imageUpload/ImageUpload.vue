@@ -1,10 +1,181 @@
+<!-- Author: Troy -->
+<!-- Email: 1045132927@qq.com -->
+<!-- 除网站 kaowola.com 及作者授权外，其余网站不可使用 -->
 <template>
-<div class="t-image-upload"><slot></slot><input ref='input'type="file"class="t-upload-input":accept="accept":disabled="disabled"@click="inputClicked"@change="inputChanged"><ImageCrop ref="cropper"v-if="crop && showCrop"@on-crop="imageCroped"@on-cancel="imageCropCancel"></ImageCrop></div>
+<div class="t-image-upload">
+  <slot></slot>
+  <input ref='input' type="file" class="t-upload-input" 
+         :accept="accept"
+         :disabled="disabled"
+         @click="inputClicked"
+         @change="inputChanged">
+
+  <ImageCrop ref="cropper"
+             v-if="crop && showCrop"
+             @on-crop="imageCroped"
+             @on-cancel="imageCropCancel"></ImageCrop>
+</div>
 </template>
 
 <script>
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('B t D\'./t\'B 6 D\'./6\'y a=\'\'16 8{1a:\'1c\',19:{t},18:{s:{4:k,17:v},1b:{4:k,8:\'d/11, d/1f, d/1g\'},H:{4:j,8:0.5,1e(i){f i<=1&&i>0}},O:{4:k,8:\'N\'},x:{4:I,8:g},E:{4:j},F:{4:j},m:{4:1d,8:()=>[]},15:{4:I,8:g}},Y(){f{l:g,7:\'\'}},Z:{C(){2.r.A.i=\'\'},13(e){y c=2.r.A.10[0]2.C()2.J()w(!6.1y(c,2.F)){2.U(c.1A)f}6.1x(c).u(9=>{a=9.a f 6.1v(9.h)}).u(d=>{2.G(6.1w(d,a,2.E,2.H))}).V(3=>{1C.M(3)2.R(1D 3===\'1t\'?3.1k(\'-\')[0]:\'1m\')})c=1i},G(h){w(2.x){2.l=v 2.n(()=>{2.r.1r.1s(h,a)})}1n 2.7=h},1o(7){2.7=7 2.z()},z(){2.l=g},1l(){2.e(\'o-X\')},U(T){2.e(\'o-1p\',T)},R(3){2.e(\'o-M\',3)},J(){2.e(\'b-1q\')},K(){2.e(\'b-1j\',2.7)},P(p){2.e(\'b-p\',p)},L(9){2.e(\'b-1h\',9)2.q()},S(3){2.e(\'b-1F\',3)2.q()},q(){2.e(\'b-1E\')}},1B:{7(){1u Q=6.1z(2.7,a)2.K()6.12({s:2.s,14:2.O,N:Q,m:2.m,W:e=>{2.P(e)}}).u(9=>{2.L(9)}).V(3=>{2.S(3)})}}}',62,104,'||this|err|type||ImageManager|imageDataUrl|default|res|mimeType|upload|imageFile|image||return|false|dataUrl|value|Number|String|showCrop|params||on|progress|uploadComplete||url|ImageCrop|then|true|if|crop|let|imageCropCancel|input|import|resetInput|from|maxWidth|maxSize|triggerCropper|quality|Boolean|uploadBefore|uploadStart|uploadSuccess|error|file|fileKeyName|uploadProgress|imageBlob|onError|uploadFail|fileSize|onOversize|catch|onProgress|click|data|methods|files|jpg|uploadImage|inputChanged|fileKey|disabled|export|required|props|components|name|accept|ImageUpload|Array|validator|jpeg|png|success|null|start|split|inputClicked|图片处理出错|else|imageCroped|oversize|before|cropper|setImageDataUrl|string|const|url2Image|compressImage|file2DataUrl|checkFileSize|base64Url2Blob|size|watch|console|typeof|complete|fail'.split('|'),0,{}))
+import ImageCrop from './ImageCrop'
 
+import ImageManager from './ImageManager'
+
+let mimeType = ''
+
+export default {
+  name: 'ImageUpload',
+  components: { ImageCrop },
+  props: {
+    url: {
+      type: String,
+      required: true
+    },
+    accept: {
+      type: String,
+      default: 'image/jpg, image/jpeg, image/png'
+    },
+    quality: {
+      type: Number,
+      default: 0.5,
+      validator (value) {
+        return value <= 1 && value > 0
+      }
+    },
+    fileKeyName: {
+      type: String,
+      default: 'file'
+    },
+    crop: {
+      type: Boolean,
+      default: false
+    },
+    maxWidth: {
+      type: Number
+    },
+    maxSize: {
+      type: Number
+    },
+    params: {
+      type: Array,
+      default: () => [] // [key, value]
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data () {
+    return {
+      showCrop: false,
+      imageDataUrl: ''
+    }
+  },
+  methods: {
+    // 重置 input
+    resetInput () {
+      this.$refs.input.value = ''
+    },
+    inputChanged (e) {
+      let imageFile = this.$refs.input.files[0]
+
+      this.resetInput()
+      this.uploadBefore()
+
+      if (!ImageManager.checkFileSize(imageFile, this.maxSize)) {
+        this.onOversize(imageFile.size)
+        return
+      }
+
+      ImageManager.file2DataUrl(imageFile)
+                  .then(res => {
+                    mimeType = res.mimeType
+                    return ImageManager.url2Image(res.dataUrl)
+                  })
+                  .then(image => {
+                    this.triggerCropper(ImageManager.compressImage(image, mimeType, this.maxWidth, this.quality))
+                  })
+                  .catch(err => {
+                    console.error(err)
+                    this.onError(typeof err === 'string' ? err.split('-')[0] : '图片处理出错')
+                  })
+      imageFile = null
+    },
+
+    triggerCropper (dataUrl) {
+      if (this.crop) {
+        this.showCrop = true
+        this.$nextTick(() => {
+          this.$refs.cropper.setImageDataUrl(dataUrl, mimeType)
+        })
+      } else this.imageDataUrl = dataUrl
+    },
+
+    // 确认剪裁
+    imageCroped (imageDataUrl) {
+      this.imageDataUrl = imageDataUrl
+      this.imageCropCancel()
+    },
+    // 取消剪裁
+    imageCropCancel () {
+      this.showCrop = false
+    },
+
+    inputClicked () {
+      this.$emit('on-click')
+    },
+    onOversize (fileSize) {
+      this.$emit('on-oversize', fileSize)
+    },
+    onError (err) {
+      this.$emit('on-error', err)
+    },
+    // 文件选取完毕时触发
+    uploadBefore () {
+      this.$emit('upload-before')
+    },
+    // 文件上传前触发
+    uploadStart () {
+      this.$emit('upload-start', this.imageDataUrl)
+    },
+    // 文件上传进度
+    uploadProgress (progress) {
+      this.$emit('upload-progress', progress)
+    },
+    // 文件上传成功
+    uploadSuccess (res) {
+      this.$emit('upload-success', res)
+      this.uploadComplete()
+    },
+    // 文件上传失败
+    uploadFail (err) {
+      this.$emit('upload-fail', err)
+      this.uploadComplete()
+    },
+    // 上传流程完成
+    uploadComplete () {
+      this.$emit('upload-complete')
+    }
+  },
+  watch: {
+    imageDataUrl () {
+      const imageBlob = ImageManager.base64Url2Blob(this.imageDataUrl, mimeType)
+      this.uploadStart()
+      ImageManager.uploadImage({
+        url: this.url,
+        fileKey: this.fileKeyName,
+        file: imageBlob,
+        params: this.params,
+        onProgress: e => {
+          this.uploadProgress(e)
+        }
+      })
+      .then(res => { this.uploadSuccess(res) })
+      .catch(err => { this.uploadFail(err) })
+    }
+  }
+}
 </script>
 
 <style scoped>

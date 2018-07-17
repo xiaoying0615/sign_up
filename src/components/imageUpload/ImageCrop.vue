@@ -1,12 +1,374 @@
+<!-- Author: Troy -->
+<!-- Email: 1045132927@qq.com -->
+<!-- 除网站 kaowola.com 及作者授权外，其余网站不可使用 -->
+
 <template>
-<div ref="cropBox"class="t-image-crop"><p class="t-image-crop-tip t-absolute-center"v-if="loading">处理图片中，请稍候...</p><div class="t-image-crop-body":class="{ 't-invisible': loading }"><img ref="image"class="t-image-crop-image t-absolute-center"><div ref="cropper"class="t-image-crop-area t-absolute"></div></div><div class="t-image-crop-buttons":style="loading ? 'display: none;' : 'display: block;'"><a href="javascript:;"class="t-image-crop-buttons-item t-image-crop-buttons-cancel"@click="cancelCrop">取消</a><a href="javascript:;"class="t-image-crop-buttons-item t-image-crop-buttons-rotate"@click="rotateImage">旋转90°</a><a href="javascript:;"class="t-image-crop-buttons-item t-image-crop-buttons-ensure"@click="ensureCrop">剪裁</a></div></div>
+<div ref="cropBox" class="t-image-crop">
+  <p class="t-image-crop-tip t-absolute-center" v-if="loading">处理图片中，请稍候...</p>
+
+  <div class="t-image-crop-body" :class="{ 't-invisible': loading }">
+    <img ref="image" class="t-image-crop-image t-absolute-center">
+    <div ref="cropper" class="t-image-crop-area t-absolute"></div>
+  </div>
+
+  <div class="t-image-crop-buttons" :style="loading ? 'display: none;' : 'display: block;'">
+    <a href="javascript:;" class="t-image-crop-buttons-item t-image-crop-buttons-cancel" @click="cancelCrop">取消</a>
+    <a href="javascript:;" class="t-image-crop-buttons-item t-image-crop-buttons-rotate" @click="rotateImage">旋转90°</a>
+    <a href="javascript:;" class="t-image-crop-buttons-item t-image-crop-buttons-ensure" @click="ensureCrop">剪裁</a>
+  </div>
+  
+</div>
 </template>
 
 <script>
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('1Z z 1s\'./z\'H g=q h=q t=q c=E f=q u=\'J\'H 7=q k=E 18=E N=1r C=E i=E K=\'\'H 9=q a=q s=q 16=E A=q j=q M=1q d=1t 1i{1p:\'1E\',1D(){Z{S:P,F:\'\'}},1G:{1C(1n,1a){K=1a 5.F=1n},1d(){H w=1y 1B()w.1A=()=>{9=w.m a=w.o s=9/a b(M){d=w M=T z.1u(d).1z(L=>{5.19(L)})}D{5.13()w=17}}i.1h=w.1h=5.F},13(){b(s>t){9=g a=h*(t/s)}D{a=h 9=g*(s/t)}16(\'m\',9+\'l\')(\'o\',a+\'l\')5.1k()5.S=T},1k(){b(9>a){f=a u=\'J\'7=(9-f)/ 2 + (g - 9) /2 k(\'R\',7+\'l\')}D{f=9 u=\'I\'7=(a-f)/ 2 + (h - a) /2 k(\'Q\',7+\'l\')}b(s<t&&u===\'I\')k(\'R\',(g-9)/2+\'l\')b(s>t&&u===\'I\')k(\'R\',0)b(s>t&&u===\'J\')k(\'Q\',(h-a)/2+\'l\')b(s<t&&u===\'J\')k(\'Q\',0)k(\'m\',f+\'l\')(\'o\',f+\'l\')5.1m()},1m(){B 15=[\'1v\',\'1w\',\'1x\',\'1H\',\'1I\',\'1J\']B V=[5.U,5.W,5.11,5.U,5.W,5.11]18(\'1F\',15,V)(\'1o\',15,V)},U(e){e.12()N=P B v=e.O?e.O[0]:e C={x:v.1c,y:v.1f}},W(e){e.12()N=T C=17},11(e){b(!N)Z e.12()B v=e.O?e.O[0]:e B Y={x:v.1c,y:v.1f}B X=5.1e(Y)b(u===\'I\'){7+=X.1V(7<=(h-a)/2){7=(h-a)/2}b(7+f>=h-(h-a)/2){7=h-(h-a)/2-f}k(\'Q\',7+\'l\')}D{7+=X.1X(7<=(g-9)/2){7=(g-9)/2}b(7+f>=g-(g-9)/2){7=g-(g-9)/2-f}k(\'R\',7+\'l\')}C=Y},1e(v){Z{1W:v.x-C.x,1U:v.y-C.y}},1j(){A++5.G()},19(L){21(L){14 6:A=1 5.G()10 14 3:A=2 5.G()10 14 8:A=3 5.G()10 1i:5.13()}},G(){5.S=P j=A%4 5.F=z.1j({w:d,K,j})},1O(){5.e(\'1l-1M\')},1K(){b(u===\'I\')7-=((h-a)/2)D 7-=((g-9)/2)H p=0 b(d.m>d.o){b(j===0)p=7/9*d.m b(j===1)p=7/a*d.m b(j===2)p=(9-f-7)/9*d.m b(j===3)p=(a-f-7)/a*d.m}D{b(j===0)p=7/a*d.o b(j===1)p=(9-f-7)/9*d.o b(j===2)p=(a-f-7)/a*d.o b(j===3)p=7/9*d.o}5.e(\'1l-1R\',z.1P(d,K,j,p,d.m>d.o?d.o:d.m))}},1Q:{F(){5.n(()=>{5.1d()})}},1N(){g=5.r.1g.1T h=5.r.1g.1S t=g/h i=5.r.w c=5.r.1L 16=z.1b(i)k=z.1b(c)18=z.20(c)},1Y(){d=17 M=P A=j=0}}',62,126,'|||||this||cropperTranslation||imageWidth|imageHeight|if||originImage||cropperSize|cropBoxWidth|cropBoxHeight||forward|cropperDomRender|px|width||height|cropPosition|0let||imageRatio|cropBoxRatio|cropperOrientation|touch|image|||ImageManager|rotateTimes|const|touchPosition|else|nulllet|imageDataUrl|renderRotatedImage|let|vertical|horizontal|mimeType|orientation|firstLoad|touched|touches|true|top|left|loading|false|startMove|fns|endMove|differ|currentPosition|return|break|cropperOnMoving|preventDefault|computeImageSize|case|events|imageDomRender|null|cropperListenerTrigger|checkOrientation|mime|renderStyle|clientX|renderImage|getTouchDiffer|clientY|cropBox|src|default|rotateImage|computedCropAreaSize|on|listenCropperMoved|dataUrl|add|name|truelet|falselet|from|nullexport|getOrientation|mousedown|mouseup|mousemove|new|then|onload|Image|setImageDataUrl|data|ImageCrop|remove|methods|touchstart|touchend|touchmove|ensureCrop|cropper|cancel|mounted|cancelCrop|cropImage|watch|crop|clientHeight|clientWidth|dy|dyif|dx|dxif|destroyed|import|triggerListener|switch'.split('|'),0,{}))
+import ImageManager from './ImageManager'
 
+let cropBoxWidth = 0 // 剪裁页宽度
+let cropBoxHeight = 0 // 剪裁页高度
+let cropBoxRatio = 0 // 剪裁页宽高比
+
+let $cropper = null // 剪裁框节点
+let cropperSize = 0 // 剪裁框尺寸
+let cropperOrientation = 'horizontal' // 剪裁框剪裁方向 horizontal | vertical
+let cropperTranslation = 0 // 剪裁框位移的距离
+let cropperDomRender = null // 剪裁框节点渲染函数
+let cropperListenerTrigger = null // 剪裁框挂载与卸载函数
+
+let touched = false // 鼠标或手指是否按下
+let touchPosition = null // 按下的位置
+
+let $image = null // 图片节点
+let mimeType = '' // 图片mime类型
+let imageWidth = 0 // 图片渲染宽度
+let imageHeight = 0 // 图片渲染高度
+let imageRatio = 0 // 图片宽高比
+let imageDomRender = null // 图片节点渲染函数
+
+let rotateTimes = 0 // 图片旋转次数
+let forward = 0 // 图片当前方向 0-0deg 1-90deg 2-180deg 3-270deg
+
+let firstLoad = true // 是否初次渲染
+let originImage = null // 原始图片 用于旋转图片时绘制 防止多次旋转后清晰度降低
+
+export default {
+  name: 'ImageCrop',
+  data () {
+    return {
+      loading: true,
+      imageDataUrl: ''
+    }
+  },
+  methods: {
+    setImageDataUrl (dataUrl, mime) {
+      mimeType = mime
+      this.imageDataUrl = dataUrl
+    },
+    // 渲染图片
+    renderImage () {
+      let image = new Image()
+      image.onload = () => {
+        imageWidth = image.width
+        imageHeight = image.height
+        imageRatio = imageWidth / imageHeight
+
+        if (firstLoad) {
+          originImage = image
+          firstLoad = false
+          ImageManager.getOrientation(originImage)
+                      .then(orientation => {
+                        this.checkOrientation(orientation)
+                      })
+        } else {
+          this.computeImageSize()
+          image = null
+        }
+      }
+      $image.src = image.src = this.imageDataUrl
+    },
+    // 计算图片尺寸信息
+    computeImageSize () {
+      if (imageRatio > cropBoxRatio) {
+        imageWidth = cropBoxWidth
+        imageHeight = cropBoxHeight * (cropBoxRatio / imageRatio)
+      } else {
+        imageHeight = cropBoxHeight
+        imageWidth = cropBoxWidth * (imageRatio / cropBoxRatio)
+      }
+      imageDomRender('width', imageWidth + 'px')('height', imageHeight + 'px')
+
+      this.computedCropAreaSize()
+      this.loading = false
+    },
+    // 计算剪裁区域尺寸信息
+    computedCropAreaSize () {
+      if (imageWidth > imageHeight) {
+        cropperSize = imageHeight
+        cropperOrientation = 'horizontal'
+        cropperTranslation = (imageWidth - cropperSize) / 2 + (cropBoxWidth - imageWidth) / 2
+
+        cropperDomRender('left', cropperTranslation + 'px')
+      } else {
+        cropperSize = imageWidth
+        cropperOrientation = 'vertical'
+        cropperTranslation = (imageHeight - cropperSize) / 2 + (cropBoxHeight - imageHeight) / 2
+
+        cropperDomRender('top', cropperTranslation + 'px')
+      }
+
+      // 校正剪裁框位置，使其垂直居中
+      if (imageRatio < cropBoxRatio && cropperOrientation === 'vertical') cropperDomRender('left', (cropBoxWidth - imageWidth) / 2 + 'px')
+      if (imageRatio > cropBoxRatio && cropperOrientation === 'vertical') cropperDomRender('left', 0)
+      if (imageRatio > cropBoxRatio && cropperOrientation === 'horizontal') cropperDomRender('top', (cropBoxHeight - imageHeight) / 2 + 'px')
+      if (imageRatio < cropBoxRatio && cropperOrientation === 'horizontal') cropperDomRender('top', 0)
+
+      cropperDomRender('width', cropperSize + 'px')('height', cropperSize + 'px')
+      this.listenCropperMoved()
+    },
+
+    // 剪裁框移动操作
+    listenCropperMoved () {
+      const events = ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove']
+      const fns = [this.startMove, this.endMove, this.cropperOnMoving, this.startMove, this.endMove, this.cropperOnMoving]
+      cropperListenerTrigger('remove', events, fns)('add', events, fns)
+    },
+    startMove (e) {
+      e.preventDefault()
+      touched = true
+      const touch = e.touches ? e.touches[0] : e
+      touchPosition = { x: touch.clientX, y: touch.clientY }
+    },
+    endMove (e) {
+      e.preventDefault()
+      touched = false
+      touchPosition = null
+    },
+    // 移动剪裁框
+    cropperOnMoving (e) {
+      if (!touched) return
+
+      e.preventDefault()
+      const touch = e.touches ? e.touches[0] : e
+      const currentPosition = { x: touch.clientX, y: touch.clientY }
+      const differ = this.getTouchDiffer(currentPosition)
+
+      if (cropperOrientation === 'vertical') { // 剪裁框垂直移动
+        cropperTranslation += differ.dy
+
+        // 上边界校验
+        if (cropperTranslation <= (cropBoxHeight - imageHeight) / 2) {
+          cropperTranslation = (cropBoxHeight - imageHeight) / 2
+        }
+        // 下边界校验
+        if (cropperTranslation + cropperSize >= cropBoxHeight - (cropBoxHeight - imageHeight) / 2) {
+          cropperTranslation = cropBoxHeight - (cropBoxHeight - imageHeight) / 2 - cropperSize
+        }
+
+        cropperDomRender('top', cropperTranslation + 'px')
+      } else { // 剪裁框水平移动
+        cropperTranslation += differ.dx
+
+        // 左边界校验
+        if (cropperTranslation <= (cropBoxWidth - imageWidth) / 2) {
+          cropperTranslation = (cropBoxWidth - imageWidth) / 2
+        }
+        // 右边界校验
+        if (cropperTranslation + cropperSize >= cropBoxWidth - (cropBoxWidth - imageWidth) / 2) {
+          cropperTranslation = cropBoxWidth - (cropBoxWidth - imageWidth) / 2 - cropperSize
+        }
+
+        cropperDomRender('left', cropperTranslation + 'px')
+      }
+
+      touchPosition = currentPosition
+    },
+    // 计算两次触摸事件之间的位置差距
+    getTouchDiffer (touch) {
+      return {
+        dx: touch.x - touchPosition.x,
+        dy: touch.y - touchPosition.y
+      }
+    },
+
+    // 旋转图片
+    rotateImage () {
+      rotateTimes++
+      this.renderRotatedImage()
+    },
+    // 校正图片方向
+    checkOrientation (orientation) {
+      switch (orientation) {
+        case 6: // 90deg
+          rotateTimes = 1
+          this.renderRotatedImage()
+          break
+
+        case 3: // 180deg
+          rotateTimes = 2
+          this.renderRotatedImage()
+          break
+
+        case 8: // 270deg
+          rotateTimes = 3
+          this.renderRotatedImage()
+          break
+
+        default:
+          this.computeImageSize()
+      }
+    },
+    // 渲染旋转后的图片
+    renderRotatedImage () {
+      this.loading = true
+      forward = rotateTimes % 4
+
+      this.imageDataUrl = ImageManager.rotateImage({
+        image: originImage,
+        mimeType,
+        forward
+      })
+    },
+
+    // 取消剪裁
+    cancelCrop () {
+      this.$emit('on-cancel')
+    },
+    // 确定剪裁
+    ensureCrop () {
+      // 剪裁框位移距离需要减去图片与屏幕上边与左边的黑色部分的距离
+      if (cropperOrientation === 'vertical') cropperTranslation -= ((cropBoxHeight - imageHeight) / 2)
+      else cropperTranslation -= ((cropBoxWidth - imageWidth) / 2)
+
+      // 计算剪裁的起始位置
+      let cropPosition = 0
+      if (originImage.width > originImage.height) {
+        if (forward === 0) cropPosition = cropperTranslation / imageWidth * originImage.width
+        if (forward === 1) cropPosition = cropperTranslation / imageHeight * originImage.width
+        if (forward === 2) cropPosition = (imageWidth - cropperSize - cropperTranslation) / imageWidth * originImage.width
+        if (forward === 3) cropPosition = (imageHeight - cropperSize - cropperTranslation) / imageHeight * originImage.width
+      } else {
+        if (forward === 0) cropPosition = cropperTranslation / imageHeight * originImage.height
+        if (forward === 1) cropPosition = (imageWidth - cropperSize - cropperTranslation) / imageWidth * originImage.height
+        if (forward === 2) cropPosition = (imageHeight - cropperSize - cropperTranslation) / imageHeight * originImage.height
+        if (forward === 3) cropPosition = cropperTranslation / imageWidth * originImage.height
+      }
+
+      this.$emit('on-crop', ImageManager.cropImage(originImage, mimeType, forward, cropPosition, originImage.width > originImage.height ? originImage.height : originImage.width))
+    }
+  },
+  watch: {
+    imageDataUrl () {
+      this.$nextTick(() => {
+        this.renderImage()
+      })
+    }
+  },
+  mounted () {
+    cropBoxWidth = this.$refs.cropBox.clientWidth
+    cropBoxHeight = this.$refs.cropBox.clientHeight
+    cropBoxRatio = cropBoxWidth / cropBoxHeight
+    $image = this.$refs.image
+    $cropper = this.$refs.cropper
+    imageDomRender = ImageManager.renderStyle($image)
+    cropperDomRender = ImageManager.renderStyle($cropper)
+    cropperListenerTrigger = ImageManager.triggerListener($cropper)
+  },
+  destroyed () {
+    originImage = null
+    firstLoad = true
+    rotateTimes = forward = 0
+  }
+}
 </script>
 
 <style scoped>
-.t-image-crop{position:fixed;width:100%;height:100%;left:0;top:0;background:#000;z-index:1000;}.t-absolute{position:absolute;}.t-invisible{opacity:0;}.t-absolute-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}.t-image-crop-tip{color:#fff;font-size:10px;}.t-image-crop-image{position:absolute;}.t-image-crop-area{border:1px solid rgba(255,255,255,.5);box-shadow:0 1px 10px rgba(0,0,0,1);}.t-image-crop-area:before,.t-image-crop-area:after{content:"";display:block;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}.t-image-crop-area:before{width:100%;height:33.333333%;border-top:1px dashed rgba(255,255,255,.5);border-bottom:1px dashed rgba(255,255,255,.5);}.t-image-crop-area:after{width:33.333333%;height:100%;border-left:1px dashed rgba(255,255,255,.5);border-right:1px dashed rgba(255,255,255,.5);}.t-image-crop-mask{background:rgba(255,255,255,.5)}.t-image-crop-buttons-item{position:absolute;bottom:10px;padding:5px 10px;color:rgba(255,255,255,1);border:1px solid rgba(255,255,255,1);border-radius:4px;text-shadow:1px 1px 0 rgba(0,0,0,1);box-shadow:0 1px 10px rgba(0,0,0,1);z-index:1;}.t-image-crop-buttons-cancel{left:10px;}.t-image-crop-buttons-ensure{right:10px;}.t-image-crop-buttons-rotate{left:50%;transform:translateX(-50%);}
+.t-image-crop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: #000;
+  z-index: 1000;
+}
+
+.t-absolute {
+  position: absolute;
+}
+
+.t-invisible {
+  opacity: 0;
+}
+
+.t-absolute-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.t-image-crop-tip {
+  color: #fff;
+  font-size: 10px;
+}
+
+.t-image-crop-image {
+  position: absolute;
+}
+
+.t-image-crop-area {
+  border: 1px solid rgba(255, 255, 255, .5);
+  box-shadow: 0 1px 10px rgba(0,0,0,1);
+}
+
+.t-image-crop-area:before, .t-image-crop-area:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.t-image-crop-area:before {
+  width: 100%;
+  height: 33.333333%;
+  border-top: 1px dashed rgba(255, 255, 255, .5);
+  border-bottom: 1px dashed rgba(255, 255, 255, .5);
+}
+
+.t-image-crop-area:after {
+  width: 33.333333%;
+  height: 100%;
+  border-left: 1px dashed rgba(255, 255, 255, .5);
+  border-right: 1px dashed rgba(255, 255, 255, .5);
+}
+
+.t-image-crop-mask {
+  background: rgba(255, 255, 255, .5)
+}
+
+.t-image-crop-buttons-item {
+  position: absolute;
+  bottom: 10px;
+  padding: 5px 10px;
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 4px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,1);
+  box-shadow: 0 1px 10px rgba(0,0,0,1);
+  z-index: 1;
+}
+
+.t-image-crop-buttons-cancel {
+  left: 10px;
+}
+
+.t-image-crop-buttons-ensure {
+  right: 10px;
+}
+
+.t-image-crop-buttons-rotate {
+  left: 50%;
+  transform: translateX(-50%);
+}
 </style>

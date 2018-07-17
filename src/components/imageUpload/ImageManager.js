@@ -1,1 +1,223 @@
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('1p D 1g\'1v-1z\'1p L 1g\'L\'r 1r={1x(e){v V(1i,P){e.1y[1i]=P 7 V}7 V},1A(e){v O(U,X,J){l(U===\'1K\'){X.Y((z,A)=>{e.1N(z,J[A])})}p{X.Y((z,A)=>{e.1M(z,J[A])})}7 O}7 O},1L(g,K){l(K&&g.8>K)7 1H 7 1c},11(g){7 f s((6,b)=>{d q=f 1w()d j=\'\'d h=\'\'q.12=(e)=>{j=e.1B.1G u=j.T(\';1F\')[0]h=u.1E(5,u.w-1)q=g=y 6&&6({j,h})}q.1a=q.19=()=>{q=g=y b&&b(\'1b-11\')}q.1C(g)})},1d(j){7 f s((6,b)=>{d 2=f 1D()2.12=()=>{6&&6(2)2=y}2.1a=2.19=()=>{2=y b&&b(\'1b-1d\')}2.1I=j})},1J(2,13,t,15){d 4=17.16(\'4\')d k=4.1n(\'2d\')l(t&&2.9>t){4.9=t 4.a=2.a*t/2.9}p{4.9=2.9 4.a=2.a}k.E(2,0,0,4.9,4.a)r j=4.14(13,15)4=k=2=y 7 j},18({2,h,c,o,8,C}){d 4=17.16(\'4\')d k=4.1n(\'2d\')l(!C){l(c===1||c===3){4.9=2.a 4.a=2.9}p{4.9=2.9 4.a=2.a}}p 4.9=4.a=8 k.2e(2c*c*2g.2f/2b)l(!C){r n=R(2.9,2.a,c)k.n(n.Q,n.S)k.E(2,0,0,2.9,2.a)}p{r n=R(8,8,c)k.n(n.Q,n.S)l(o<0)o=0 l(2.9>2.a)k.E(2,o,0,8,8,0,0,8,8)p k.E(2,0,o,8,8,0,0,8,8)}7 4.14(h,1)},28(2,h,c,o,8){7 F.18({2,h,c,o,8,C:1c})},2j(2){7 f s((6,b)=>{1h(2,[\'27\']).1m(m=>{6&&6(m)}).1k(B=>b&&b(B))})},29(j,h){r u=j.T(\',\')r H=2o.2m(u[1])d Z=f 2n(H.w)2l(d i=0;i<H.w;i++){Z[i]=H.2i(i)}7{g:f 2h([Z],{U:h}),1s:`${f 2k().1U()}.${h.T(\'/\')[1]}`}},1T({M,1t,g,10,W}){7 f s((6,b)=>{d I=f 2a()10&&10.Y(N=>{I.1u(N.1V,N.P)})I.1u(1t,g.g,g.1s)L({M:M,1S:\'1P\',1j:I,1O:{\'1R-1Q\':\'1X/x-24-23-26\'},25:(e)=>{W&&W({1f:e.1f,1l:e.1l})}}).1m(m=>{6&&6(m.1j)}).1k(B=>{b&&b(B)})})}}v 1h(2,G){7 f s((6,b)=>{D.22(2,v(){l(!G||!G.w){D.1Z(F)6&&6(F)}p{d m=G.1Y(1e=>D.21(F,1e))6&&6(m.w===1?m[0]:m)}})})}v R(1q,1o,c){7{Q:c===0||c===1?0:-1q,S:c===0||c===3?0:-1o}}20 1W 1r',62,149,'||image||canvas||resolve|return|size|width|height|reject|forward|let||new|file|mimeType||dataUrl|ctx|if|res|translate|start|else|fd|const|Promise|maxWidth|temp|function|length||null|event|index|err|crop|Exif|drawImage|this|tags|bytes|formData|fns|standard|axios|url|item|trigger|value|tx|computeRotateTranslate|ty|split|type|render|onProgress|events|forEach|ia|params|file2DataUrl|onload|mime|toDataURL|quality|createElement|document|rotateImage|onabort|onerror|图片处理失败|true|url2Image|tag|loaded|from|getExif|prop|data|catch|total|then|getContext|imageHeight|import|imageWidth|ImageManager|name|fileKey|append|exif|FileReader|renderStyle|style|js|triggerListener|target|readAsDataURL|Image|substr|base64|resultlet|false|src|compressImage|add|checkFileSize|removeEventListener|addEventListener|headers|post|Type|Content|method|uploadImage|getTime|key|default|application|map|getAllTags|export|getTag|getData|form|www|onUploadProgress|urlencoded|Orientation|cropImage|base64Url2Blob|FormData|180|90||rotate|PI|Math|Blob|charCodeAt|getOrientation|Date|for|atob|Uint8Array|window'.split('|'),0,{}))
+/**
+ * Author: Troy
+ * Email: 1045132927@qq.com
+ * 除网站 kaowola.com 及作者授权外，其余网站不可使用
+ */
+
+import Exif from 'exif-js'
+import axios from 'axios'
+
+const ImageManager = {
+  renderStyle ($el) {
+    function render (prop, value) {
+      $el.style[prop] = value
+      return render
+    }
+    return render
+  },
+
+  triggerListener ($el) {
+    function trigger (type, events, fns) {
+      if (type === 'add') {
+        events.forEach((event, index) => {
+          $el.addEventListener(event, fns[index])
+        })
+      } else {
+        events.forEach((event, index) => {
+          $el.removeEventListener(event, fns[index])
+        })
+      }
+      return trigger
+    }
+    return trigger
+  },
+
+  // 校验文件大小
+  checkFileSize (file, standard) {
+    if (standard && file.size > standard) return false
+    return true
+  },
+
+  // 文件转base64
+  file2DataUrl (file) {
+    return new Promise((resolve, reject) => {
+      let fd = new FileReader()
+      let dataUrl = ''
+      let mimeType = ''
+      fd.onload = (e) => {
+        dataUrl = e.target.result
+        // mimeType = dataUrl.match(/data:(.{6,});base64/)[1] // 通过正则获取mimeType会导致堆栈溢出 为什么
+        let temp = dataUrl.split(';base64')[0]
+        mimeType = temp.substr(5, temp.length - 1)
+        fd = file = null
+        resolve && resolve({ dataUrl, mimeType })
+      }
+      fd.onerror =
+      fd.onabort =
+        () => {
+          fd = file = null
+          reject && reject('图片处理失败-file2DataUrl')
+        }
+      fd.readAsDataURL(file)
+    })
+  },
+
+  // base64转图片
+  url2Image (dataUrl) {
+    return new Promise((resolve, reject) => {
+      let image = new Image()
+      image.onload = () => {
+        resolve && resolve(image)
+        image = null
+      }
+      image.onerror =
+      image.onabort =
+        () => {
+          image = null
+          reject && reject('图片处理失败-url2Image')
+        }
+      image.src = dataUrl
+    })
+  },
+
+  // 压缩图片
+  compressImage (image, mime, maxWidth, quality) {
+    let canvas = document.createElement('canvas')
+    let ctx = canvas.getContext('2d')
+    if (maxWidth && image.width > maxWidth) {
+      canvas.width = maxWidth
+      canvas.height = image.height * maxWidth / image.width
+    } else {
+      canvas.width = image.width
+      canvas.height = image.height
+    }
+
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
+    const dataUrl = canvas.toDataURL(mime, quality)
+    canvas = ctx = image = null
+    return dataUrl
+  },
+
+  rotateImage ({ image, mimeType, forward, start, size, crop }) {
+    let canvas = document.createElement('canvas')
+    let ctx = canvas.getContext('2d')
+
+    if (!crop) {
+      if (forward === 1 || forward === 3) {
+        canvas.width = image.height
+        canvas.height = image.width
+      } else {
+        canvas.width = image.width
+        canvas.height = image.height
+      }
+    } else canvas.width = canvas.height = size
+
+    ctx.rotate(90 * forward * Math.PI / 180)
+
+    if (!crop) {
+      const translate = computeRotateTranslate(image.width, image.height, forward)
+      ctx.translate(translate.tx, translate.ty)
+      ctx.drawImage(image, 0, 0, image.width, image.height)
+    } else {
+      const translate = computeRotateTranslate(size, size, forward)
+      ctx.translate(translate.tx, translate.ty)
+      if (start < 0) start = 0
+      if (image.width > image.height) ctx.drawImage(image, start, 0, size, size, 0, 0, size, size)
+      else ctx.drawImage(image, 0, start, size, size, 0, 0, size, size)
+    }
+
+    return canvas.toDataURL(mimeType, 1)
+  },
+
+  // 裁切图片
+  cropImage (image, mimeType, forward, start, size) {
+    return this.rotateImage({
+      image,
+      mimeType,
+      forward,
+      start,
+      size,
+      crop: true
+    })
+  },
+
+  // 获取图片方向信息
+  getOrientation (image) {
+    return new Promise((resolve, reject) => {
+      getExif(image, ['Orientation'])
+        .then(res => { resolve && resolve(res) })
+        .catch(err => reject && reject(err))
+    })
+  },
+
+  // base64转blob
+  base64Url2Blob (dataUrl, mimeType) {
+    const temp = dataUrl.split(',')
+    const bytes = window.atob(temp[1])
+    let ia = new Uint8Array(bytes.length)
+    for (let i = 0; i < bytes.length; i++) {
+      ia[i] = bytes.charCodeAt(i)
+    }
+    return {
+      file: new Blob([ia], {
+        type: mimeType
+      }),
+      name: `${new Date().getTime()}.${mimeType.split('/')[1]}`
+    }
+  },
+
+  // 上传
+  uploadImage ({ url, fileKey, file, params, onProgress }) {
+    return new Promise((resolve, reject) => {
+      let formData = new FormData()
+      params && params.forEach(item => {
+        formData.append(item.key, item.value)
+      })
+      formData.append(fileKey, file.file, file.name)
+
+      axios({
+        url: url,
+        method: 'post',
+        data: formData,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        onUploadProgress: (e) => {
+          onProgress && onProgress({
+            loaded: e.loaded,
+            total: e.total
+          })
+        }
+      }).then(res => {
+        resolve && resolve(res.data)
+      }).catch(err => {
+        reject && reject(err)
+      })
+    })
+  }
+}
+
+// 获取图片exif元数据
+function getExif (image, tags) {
+  return new Promise((resolve, reject) => {
+    Exif.getData(image, function () {
+      if (!tags || !tags.length) {
+        Exif.getAllTags(this)
+        resolve && resolve(this)
+      } else {
+        let res = tags.map(tag => Exif.getTag(this, tag))
+        resolve && resolve(res.length === 1 ? res[0] : res)
+      }
+    })
+  })
+}
+
+// 计算图片旋转后位移的信息
+function computeRotateTranslate (imageWidth, imageHeight, forward) {
+  return {
+    tx: forward === 0 || forward === 1 ? 0 : -imageWidth,
+    ty: forward === 0 || forward === 3 ? 0 : -imageHeight
+  }
+}
+
+export default ImageManager

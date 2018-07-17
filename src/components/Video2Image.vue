@@ -1,11 +1,157 @@
+<!-- Author: Troy -->
+<!-- Email: 1045132927@qq.com -->
+<!-- 除网站 kaowola.com 及作者授权外，其余网站不可使用 -->
 <template>
-<div ref="videoBox"class="t-video-box"><video ref="videoBackup"class="t-video-backup"autoplay></video><div class="t-video-wrap"><video ref="video"class="t-video"autoplay></video></div></div>
+<div ref="videoBox" class="t-video-box">
+  <video ref="videoBackup" class="t-video-backup" autoplay></video>
+  <div class="t-video-wrap">
+    <video ref="video" class="t-video" autoplay></video>
+  </div>
+</div>
 </template>
 
 <script>
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('p 4=14.15(\'4\')p u=4.16(\'11\')d l=12 d b=0 d 8=0 13 v{17:\'1b\',1c:{N:{E:g,v:1,1d(n){7 n<=1&&n>0}},a:{E:g,v:10}},P(){7{k:\'\'}},R:{I(){c(6.f.5===Q){6.f.5=(x)=>{T 5=6.S||6.X c(!5){7 H.w(C Y(\'5 Z U V W 3 1e\'))}7 C H((A,w)=>{5.1t(6,x,A,w)})}}6.f.1u().o(3.G).o(3.D).O(9=>{3.j(9)})},G(h){1x(d i=0;i<h.1v;i++){c(h[i].1w===\'1i\'){3.k=h[i].F 7}}c(!3.k){3.j(\'1h\')}},D(){6.f.5({t:{F:3.k,m:y,s:y}}).o(z=>{3.r.t.B=z 3.r.J.B=1g(!l){1f(()=>{b=8=0 l=1j},1s)}}).O(9=>{3.j(9)})},L(){c(!b&&!8){p q=1n.1l(3.r.J,1k)b=g(q.m.K(\'M\',\'\'))8=g(q.s.K(\'M\',\'\'))}u.1m(0,0,3.a,3.a)u.1o(3.r.t,(b-8)/2,0,8,8,0,0,3.a,3.a)7 4},1y(){3.L()7 4.1q(\'1p/1r\',3.N)},j(9){3.e(\'1a-19\',9)}},18(){4.m=4.s=3.a 3.I()}}',62,97,'|||this|canvas|getUserMedia|navigator|return|videoDefaultHeight|err|size|videoDefaultWidth|if|let||mediaDevices|Number|devices||triggerError|cameraId|cemareInit|width|value|then|const|videoDefaultStyle||height|video|ctx|default|reject|constraints|1080|stream|resolve|srcObject|new|getStream|type|deviceId|getCamera|Promise|cameraInit|videoBackup|replace|getCanvas|px|compress|catch|data|undefined|methods|webkitGetUserMedia|var|not|implemented|in|mozGetUserMedia|Error|is|400|2d|false|export|document|createElement|getContext|name|mounted|error|on|Video2Image|props|validator|browser|setTimeout|streamif|摄像头不存在|videoinput|true|null|getComputedStyle|clearRect|window|drawImage|image|toDataURL|jpeg|1000|call|enumerateDevices|length|kind|for|getImageDataUrl'.split('|'),0,{}))
+const canvas = document.createElement('canvas')
+const ctx = canvas.getContext('2d')
+let cemareInit = false
+let videoDefaultWidth = 0
+let videoDefaultHeight = 0
+
+export default {
+  name: 'Video2Image',
+  props: {
+    compress: {
+      type: Number,
+      default: 1,
+      validator (value) {
+        return value <= 1 && value > 0
+      }
+    },
+    size: {
+      type: Number,
+      default: 400
+    }
+  },
+  data () {
+    return {
+      cameraId: ''
+    }
+  },
+  methods: {
+    // 初始化摄像头
+    cameraInit () {
+      if (navigator.mediaDevices.getUserMedia === undefined) {
+        navigator.mediaDevices.getUserMedia = (constraints) => {
+          var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+          if (!getUserMedia) {
+            return Promise.reject(new Error('getUserMedia is not implemented in this browser'))
+          }
+          return new Promise((resolve, reject) => {
+            getUserMedia.call(navigator, constraints, resolve, reject)
+          })
+        }
+      }
+
+      navigator.mediaDevices.enumerateDevices().then(this.getCamera).then(this.getStream).catch(err => {
+        this.triggerError(err)
+      })
+    },
+
+    // 获取摄像头
+    getCamera (devices) {
+      for (let i = 0; i < devices.length; i++) {
+        if (devices[i].kind === 'videoinput') {
+          this.cameraId = devices[i].deviceId
+          return
+        }
+      }
+      if (!this.cameraId) {
+        this.triggerError('摄像头不存在')
+      }
+    },
+
+    // 获取媒体流
+    getStream () {
+      navigator.mediaDevices.getUserMedia({
+        video: {
+          deviceId: this.cameraId,
+          width: 1080,
+          height: 1080
+        }
+      }).then(stream => {
+        this.$refs.video.srcObject = stream
+        this.$refs.videoBackup.srcObject = stream
+
+        // 解决摄像画面初始化问题
+        if (!cemareInit) {  
+          setTimeout(() => {
+            videoDefaultWidth = videoDefaultHeight = 0
+            cemareInit = true
+          }, 1000)
+        }
+      }).catch(err => {
+        this.triggerError(err)
+      })
+    },
+
+    // 获取当前可视区域画布
+    getCanvas () {
+      if (!videoDefaultWidth && !videoDefaultHeight) {
+        const videoDefaultStyle = window.getComputedStyle(this.$refs.videoBackup, null)
+        videoDefaultWidth = Number(videoDefaultStyle.width.replace('px', ''))
+        videoDefaultHeight = Number(videoDefaultStyle.height.replace('px', ''))
+      }
+
+      ctx.clearRect(0, 0, this.size, this.size)
+      ctx.drawImage(this.$refs.video, (videoDefaultWidth - videoDefaultHeight) / 2, 0, videoDefaultHeight, videoDefaultHeight, 0, 0, this.size, this.size)
+      return canvas
+    },
+
+    // 获取当前可视区域图片
+    getImageDataUrl () {
+      this.getCanvas()
+      return canvas.toDataURL('image/jpeg', this.compress)
+    },
+
+    triggerError (err) {
+      this.$emit('on-error', err)
+    }
+  },
+  mounted () {
+    canvas.width = canvas.height = this.size
+    this.cameraInit()
+  }
+}
 </script>
 
 <style scoped>
-.t-video-box{position:relative;width:100%;height:100%;}.t-video-backup{position:absolute;display:block;opacity:0;}.t-video-wrap{position:absolute;width:100%;height:100%;left:0;top:0;overflow:hidden;}.t-video{position:absolute;display:block;height:100%;left:50%;top:50%;transform:translate(-50%,-50%);}
+.t-video-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.t-video-backup {
+  position: absolute;
+  display: block;
+  opacity: 0;
+}
+
+.t-video-wrap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+}
+
+.t-video {
+  position: absolute;
+  display: block;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>
