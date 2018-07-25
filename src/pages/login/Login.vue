@@ -18,7 +18,7 @@
               @on-submit="submit"></FindBack>
     </div>
 
-    <CompanyInfo class="box-shadow margin-top-20"></CompanyInfo>
+    <CompanyInfo class="margin-top-20"></CompanyInfo>
   </div>
 </div>
 </template>
@@ -149,10 +149,10 @@ export default {
 }
 
 .login-box {
-  width: 300px;
+  width: 80%;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
 }
 
 .logo {
@@ -163,5 +163,9 @@ export default {
   padding: 20px;
   background: #fff;
   border-radius: 4px;
+}
+.logo,.login{
+  width: 300px;
+  margin:0 auto;
 }
 </style>

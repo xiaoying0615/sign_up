@@ -6,6 +6,13 @@
         <SignInList type="signed" :nickname="searchName" @on-select="tableSelected"></SignInList>
       </Tab-pane>
       <Tab-pane name="unsigned" label="未签到" icon="close-round">
+        <div style="margin-bottom: 15px;">
+          <Button type="info"
+                  @click="fetchData">手动添加</Button>
+          <Button type="info"
+                  @click="fetchData">批量导入</Button>
+          <span>（批量导入前请先 <a href="#">下载模板</a>，并按照模板格式填写信息，模板内容请前往“表单设计”进行添加表单信息）</span>
+        </div>
         <SignInList type="unsigned" :nickname="searchName" @on-select="tableSelected"></SignInList>
       </Tab-pane>
     </Tabs>
@@ -14,24 +21,24 @@
   <Col span="6">
     <div class="padding-10 margin-bottom-20 box-shadow bg-white">
       <p class="part-title">数据总览</p>
-      <p style="margin-left: 20px;">总人数：{{signInfo.allNum}}</p><br> 
-      <p style="margin-left: 20px;">已签到：{{signInfo.signNum}}</p><br> 
+      <p style="margin-left: 20px;">总人数：{{signInfo.allNum}}</p><br>
+      <p style="margin-left: 20px;">已签到：{{signInfo.signNum}}</p><br>
       <p style="margin-left: 20px;">未签到：{{signInfo.notSignNum}}</p><br>
     </div>
-     
+
      <div class="padding-10 box-shadow bg-white">
        <p class="part-title">数据操作</p>
       <Input class="margin-bottom-10" v-model="searchName" placeholder="输入微信昵称搜索" icon="search"></Input>
-      <Button class="green-button margin-bottom-10" 
+      <Button class="green-button margin-bottom-10"
               type="ghost" icon="checkmark-round" long
               :disabled="signInButtonDisabled"
               :loading="signInButtonLoading"
               @click="batchSignIn">批量补签</Button>
-      <Button class="red-button margin-bottom-10" 
-              type="ghost" icon="trash-b" long
-              :loading="deleteButtonLoading"
-              @click="batchDelete">批量删除</Button>
-      <Button class="blue-button margin-bottom-10" type="ghost" icon="android-download" 
+      <!--<Button class="red-button margin-bottom-10" -->
+              <!--type="ghost" icon="trash-b" long-->
+              <!--:loading="deleteButtonLoading"-->
+              <!--@click="batchDelete">批量删除</Button>-->
+      <Button class="blue-button margin-bottom-10" type="ghost" icon="android-download"
               :loading="exportButtonLoading" long
               @click="exportRecords">导出数据</Button>
      </div>
@@ -140,7 +147,7 @@ export default {
           .then(() => {
             this.doBatchDelete(signedSelection)
           })
-        
+
       } else {
         if (!unsignedSelection.length) {
           this.$Message.warning('请先选择需要删除的人员')

@@ -1,4 +1,4 @@
-const baseURL = 'https://www2.kaowola.com/'
+const baseURL = 'http://face.kaowola.com/'
 
 export default {
   admin: {
@@ -83,6 +83,13 @@ export default {
   tool: {
     // 获取服务器时间
     getTime: baseURL + 'admin/activity/getTime'
+  },
+
+  user: {
+    // 获取百度配置信息
+    getFaceSite: baseURL + 'admin/User/getFaceSite',
+    // 修改百度配置信息
+    editFaceSite: baseURL + 'admin/User/editFaceSite'
   }
-  
+
 }

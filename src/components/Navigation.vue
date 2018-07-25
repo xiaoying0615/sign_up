@@ -39,6 +39,10 @@
           <Icon type="unlocked"></Icon>
           修改密码
         </Dropdown-item>
+        <Dropdown-item name="configureInterface">
+          <Icon type="android-options"></Icon>
+          配置接口
+        </Dropdown-item>
         <Dropdown-item name="logout">
           <Icon type="power"></Icon>
           退出登录
@@ -69,7 +73,7 @@
     </Submenu> -->
 
   </Menu>
-
+  <ConfigureInterface></ConfigureInterface>
   <ModifyPassword></ModifyPassword>
   <OrderHistory></OrderHistory>
 </div>
@@ -77,12 +81,13 @@
 </template>
 
 <script>
+import ConfigureInterface from '@/pages/setting/components/ConfigureInterface'
 import ModifyPassword from '@/pages/login/components/ModifyPassword'
 import OrderHistory from '@/pages/records/components/OrderHistory'
 
 export default {
   name: 'Navigation',
-  components: { ModifyPassword, OrderHistory },
+  components: { ConfigureInterface,ModifyPassword, OrderHistory },
   data () {
     return {
       menu: 'activities',
@@ -96,7 +101,9 @@ export default {
     },
 
     dropdownClicked (name) {
-      if (name === 'modifyPassword') {
+      if (name === 'configureInterface') {
+        $bus.$emit('CONFIGURE_INTERFACE')
+      } else if (name === 'modifyPassword') {
         $bus.$emit('MODIFY_PASSWORD')
       } else if (name === 'orderHistory') {
         $bus.$emit('ORDER_HISTORY')

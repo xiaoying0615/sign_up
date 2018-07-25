@@ -17,7 +17,7 @@
                 <Date-picker type="date" v-model="formData.startTime" readonly></Date-picker>
               </Form-item>
             </Col>
-          
+
             <Col span="12">
               <Form-item label="结束时间" prop="endTime">
                 <Date-picker v-model="formData.endTime" type="date" :clearable="false" :options="endDateLimit" :readonly="status === 3"></Date-picker>
@@ -38,14 +38,14 @@
         </Alert>
 
         <Alert type="success" show-icon v-else>您已去除版权信息</Alert>
-        
+
       </Col>
     </Row>
 
   </Col>
 
   <Col span="12">
-    
+
     <Row>
       <Col class="margin-10 padding-10 bg-white box-shadow">
         <p class="part-title">屏幕规格</p>
@@ -216,11 +216,12 @@ export default {
       }, 500)
       ajax.auto(apis.activity.editInfo, {
         id: this.id,
-        end_time: util.dateFormat(this.formData.endTime),
-        screen_type: this.formData.screenType,
-        content_type: this.formData.contentType,
-        avatar_type: this.formData.onWallType,
-        background: this.backgroundImage
+        name:this.formData.name,
+        end_time: util.dateFormat(this.formData.endTime)
+//        screen_type: this.formData.screenType,
+//        content_type: this.formData.contentType,
+//        avatar_type: this.formData.onWallType,
+//        background: this.backgroundImage
       }).then(res => {
         this.$Message.success('修改成功')
         // this.$router.go(-1)
