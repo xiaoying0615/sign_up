@@ -4,10 +4,10 @@
        width="700"
        :loading="true"
        @on-cancel="reset">
-  
+
   <div class="margin-bottom-20">
     <!-- <p class="part-title margin-bottom-10">活动流程指引</p> -->
-    
+
     <img src="@/assets/img-activity-progress.jpg">
   </div>
 
@@ -30,7 +30,7 @@
             <Date-picker v-model="formData.startDate" type="date" readonly></Date-picker>
           </Form-item>
         </Col>
-      
+
         <Col span="12">
           <Form-item label="结束时间" prop="endDate">
             <Date-picker v-model="formData.endDate" type="date" :clearable="false" :options="endDateLimit"></Date-picker>
@@ -50,7 +50,7 @@
   <Button slot="footer" type="primary"
           :loading="loading"
           @click="submit">确定</Button>
-  
+
 
 </Modal>
 </template>

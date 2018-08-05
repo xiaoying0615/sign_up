@@ -2,7 +2,7 @@
 <div>
   <Table :columns="header" :data="data"
          @on-selection-change="selectChanged"></Table>
-  <Button class="blue-button margin-top-10" type="ghost" long 
+  <Button class="blue-button margin-top-10" type="ghost" long
           :loading="loading" :disabled="disabled"
           @click="fetchData">{{loadingTip}}</Button>
 </div>
@@ -83,7 +83,7 @@ export default {
           return h('div',
                    p.row.formData.map(
                     item => h(
-                              'p', 
+                              'p',
                               {
                                 style: {
                                   margin: '2px 0'

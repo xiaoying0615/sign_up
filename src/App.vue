@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view name="nav"></router-view>
-    <div class="margin-10">
+    <div class="content">
       <router-view></router-view>
     </div>
     <router-view name="company"></router-view>
@@ -176,9 +176,5 @@ img {
 .white-button:focus {
   color: #fff;
   border-color: #fff;
-}
-
-.subview {
-  margin-left: 210px !important;
 }
 </style>
