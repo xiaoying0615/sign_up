@@ -1,7 +1,7 @@
 <template>
   <Loading v-if="loading">加载中，请稍候...</Loading>
   <div v-else>
-    <div v-if="menu === 1" class="baseSet padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+    <div v-if="menu === '1'" class="baseSet padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
       <p class="part-title">基础设置</p>
       <Form class="padding-right-10" :label-width="80" :model="formData">
         <Form-item label="活动名称" prop="name">
@@ -36,7 +36,61 @@
         </Button>
       </div>
     </div>
-  </div>
+    <div v-if="menu === '2'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+      <p class="part-title">屏幕规格</p>
+      <Form class="padding-right-10" :label-width="80">
+        <Form-item label="屏幕方向">
+          <Radio-group v-model="formData.screenType">
+            <Radio :label="1">横向</Radio>
+            <Radio :label="2">竖向</Radio>
+          </Radio-group>
+        </Form-item>
+
+        <Form-item label="显示样式">
+          <Radio-group v-model="formData.contentType">
+            <Radio :label="1">人脸属性</Radio>
+            <Radio :label="2">个人信息</Radio>
+          </Radio-group>
+        </Form-item>
+      </Form>
+      <div class="clear">
+        <Button type="primary" class="fr submit"
+                :loading="submitLoading"
+                @click="submit">保存
+        </Button>
+      </div>
+    </div>
+    <div v-if="menu === '3'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+      <p class="part-title">背景图片</p>
+      <Uploader :url="url"
+                :data="extraData"
+                :previewImage="backgroundImage"
+                @on-change="uploadChanged"></Uploader>
+
+      <p class="margin-top-20">请上传 2Mb 以内的图片，建议图片宽高比：竖屏9:16，横屏16:9</p>
+
+      <div class="clear">
+        <Button type="primary" class="fr submit"
+                :loading="submitLoading"
+                @click="submit">保存
+        </Button>
+      </div>
+    </div>
+    <div v-if="menu === '4'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+      <p class="part-title">头像上墙</p>
+      <Radio-group v-model="formData.onWallType">
+        <Radio :label="1">默认</Radio>
+        <Radio :label="2">3D签到</Radio>
+      </Radio-group>
+
+      <div class="clear">
+        <Button type="primary" class="fr submit"
+                :loading="submitLoading"
+                @click="submit">保存
+        </Button>
+      </div>
+    </div>
+    <Payment></Payment>
   </div>
 </template>
 <script>
@@ -69,7 +123,7 @@
           onWallType: 1 // default-1 3D-2
         },
         status: 0,
-        menu:1,
+        menu:"1",
         showVersion: true,
         endDateLimit: {}
       }
@@ -168,13 +222,19 @@
     created () {
       // this.readFromLocal()
       this.id = this.$route.params.activityId
-//      this.menu = this.$route.query.menu
-      console.log(this.menu);
+      this.menu = this.$route.query.menuItem ? this.$route.query.menuItem : "1"
       this.fetchData()
       $bus.$on('SIGNIN_SETTING_RELOAD', () => {
         this.fetchData()
       })
+    },
+    beforeRouteUpdate (to, from, next) {
+      if(to.query.menuItem){
+        this.menu = to.query.menuItem
+      }
+      next()
     }
+
   }
 </script>
 <style scoped>
@@ -205,7 +265,7 @@
     color: #000;
     padding-right: 60px;
   }
-  .baseSet .submit{
+  .submit{
     width: 150px;
     height: 44px;
     margin: 30px 0px;

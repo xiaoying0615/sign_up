@@ -9,7 +9,7 @@
               <Icon type="compose"/>
               签到设置
             </template>
-            <MenuItem name="1-1">基础设置</MenuItem>
+            <MenuItem name="1-1" >基础设置</MenuItem>
             <MenuItem name="1-2">屏幕规格</MenuItem>
             <MenuItem name="1-3">主题背景</MenuItem>
             <MenuItem name="1-4">签到墙</MenuItem>
@@ -33,24 +33,23 @@
     name: 'Setting',
     data () {
       return {
-        activityId: this.$route.params.activityId,
-        activeMenu: 'signIn'
+        activityId: this.$route.params.activityId
       }
     },
     methods: {
       menuSelected (name) {
         switch (name) {
           case '1-1':
-            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId}, get: {menu: 1}})
+            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId},query:{menuItem: "1"}})
             break
           case '1-2':
-            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId}, get: {menu: 2}})
+            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId},query:{menuItem: "2"}})
             break
           case '1-3':
-            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId}, get: {menu: 3}})
+            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId},query:{menuItem: "3"}})
             break
           case '1-4':
-            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId}, get: {menu: 4}})
+            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId},query:{menuItem: "4"}})
             break
 
           case '2-1':
