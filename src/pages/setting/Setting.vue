@@ -2,7 +2,7 @@
   <div class="container clear">
     <div class="fl" style="width:200px;">
       <Affix :offset-top="60">
-        <Menu ref="menu" mode="vertical" theme="dark" width="200px" active-name="1-1" :open-names="['1']"
+        <Menu ref="menu" mode="vertical" theme="dark" width="200px" :active-name="menu" :open-names="['1']"
               @on-select="menuSelected">
           <Submenu name="1">
             <template slot="title">
@@ -33,30 +33,24 @@
     name: 'Setting',
     data () {
       return {
-        activityId: this.$route.params.activityId
+        activityId: this.$route.params.activityId,
+        menu : "1-1"
       }
     },
     methods: {
       menuSelected (name) {
-        switch (name) {
-          case '1-1':
-            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId},query:{menuItem: "1"}})
-            break
-          case '1-2':
-            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId},query:{menuItem: "2"}})
-            break
-          case '1-3':
-            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId},query:{menuItem: "3"}})
-            break
-          case '1-4':
-            this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId},query:{menuItem: "4"}})
-            break
-
-          case '2-1':
-            this.$router.replace({name: 'settingDrawAward', params: {activityId: this.activityId}})
-            break
+        if(name.indexOf("1-") >= 0){
+          this.$router.replace({name: 'settingSignIn', params: {activityId: this.activityId},query:{menuItem: name}})
+        }else{
+          this.$router.replace({name: 'settingDrawAward', params: {activityId: this.activityId},query:{menuItem: name}})
         }
       }
+    },
+    created () {
+      if(this.$route.query.menuItem){
+        this.menu = this.$route.query.menuItem
+      }
+     console.log("menu:" + this.$route.query.menuItem)
     }
   }
 </script>

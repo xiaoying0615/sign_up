@@ -31,7 +31,13 @@ export default {
     // 查询基本信息
     fetchInfo: baseURL + 'admin/activity/getInfo',
     // 修改基本信息
-    editInfo: baseURL + 'admin/activity/editBaseInfo',
+    editBaseInfo: baseURL + 'admin/activity/editBaseInfo',
+    // 修改屏幕规格
+    editScreenInfo: baseURL + 'admin/activity/editScreenInfo',
+    // 修改签到墙类型
+    editAvatarType: baseURL + 'admin/activity/editAvatarType',
+    // 修改背景及风格
+    editBackground: baseURL + 'admin/activity/editScreenBackground',
     // 编辑活动表单
     editFormInfo: baseURL + 'admin/activity/editFormInfo',
     // 上传背景图

@@ -1,7 +1,7 @@
 <template>
   <Loading v-if="loading">加载中，请稍候...</Loading>
   <div v-else>
-    <div v-if="menu === '1'" class="baseSet padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+    <div v-if="menu === '1-1'" class="baseSet padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
       <p class="part-title">基础设置</p>
       <Form class="padding-right-10" :label-width="80" :model="formData">
         <Form-item label="活动名称" prop="name">
@@ -32,23 +32,24 @@
       <div class="clear">
         <Button type="primary" class="fr submit"
                 :loading="submitLoading"
-                @click="submit">保存
+                @click="baseInfoSubmit">保存
         </Button>
       </div>
     </div>
-    <div v-if="menu === '2'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+    <div v-if="menu === '1-2'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
       <p class="part-title">屏幕规格</p>
-      <Form class="padding-right-10" :label-width="80">
+      <Form label-position="left" :label-width="90" class="margin-left-10 padding-left-10">
         <Form-item label="屏幕方向">
-          <Radio-group v-model="formData.screenType">
+          <RadioGroup v-model="formData.screenType" type="button" >
             <Radio :label="1">横向</Radio>
-            <Radio :label="2">竖向</Radio>
-          </Radio-group>
+            <Radio :label="2">纵向</Radio>
+            <Radio :label="3">小屏</Radio>
+          </RadioGroup>
         </Form-item>
 
         <Form-item label="显示样式">
-          <Radio-group v-model="formData.contentType">
-            <Radio :label="1">人脸属性</Radio>
+          <Radio-group v-model="formData.contentType" type="button">
+            <Radio :label="1" >人脸属性</Radio>
             <Radio :label="2">个人信息</Radio>
           </Radio-group>
         </Form-item>
@@ -56,11 +57,11 @@
       <div class="clear">
         <Button type="primary" class="fr submit"
                 :loading="submitLoading"
-                @click="submit">保存
+                @click="screenInfoSubmit">保存
         </Button>
       </div>
     </div>
-    <div v-if="menu === '3'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+    <div v-if="menu === '1-3'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
       <p class="part-title">背景图片</p>
       <Uploader :url="url"
                 :data="extraData"
@@ -72,11 +73,11 @@
       <div class="clear">
         <Button type="primary" class="fr submit"
                 :loading="submitLoading"
-                @click="submit">保存
+                @click="backgroundSubmit">保存
         </Button>
       </div>
     </div>
-    <div v-if="menu === '4'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+    <div v-if="menu === '1-4'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
       <p class="part-title">头像上墙</p>
       <Radio-group v-model="formData.onWallType">
         <Radio :label="1">默认</Radio>
@@ -86,7 +87,7 @@
       <div class="clear">
         <Button type="primary" class="fr submit"
                 :loading="submitLoading"
-                @click="submit">保存
+                @click="avatarTypeSubmit">保存
         </Button>
       </div>
     </div>
@@ -96,8 +97,6 @@
 <script>
   import Uploader from '@/components/Uploader'
   import Payment from '@/components/Payment'
-
-  let startTime
 
   export default {
     name: 'SignIn',
@@ -118,12 +117,12 @@
           name: '活动名称',
           startTime: '',
           endTime: '',
-          screenType: 1, // horizontal-1 vertical-2
+          screenType: 1, // horizontal-1 vertical-2 smallScreen-3
           contentType: 1, // terse-1 complex-2
           onWallType: 1 // default-1 3D-2
         },
         status: 0,
-        menu:"1",
+        menu:"1-1",
         showVersion: true,
         endDateLimit: {}
       }
@@ -196,20 +195,73 @@
         return true
       },
 
-      submit () {
+      baseInfoSubmit () {
         if (!this.formValidate()) return
         this.submitLoading = true
         setTimeout(() => {
           this.submitLoading = false
         }, 500)
-        ajax.auto(apis.activity.editInfo, {
+        ajax.auto(apis.activity.editBaseInfo, {
           id: this.id,
           name: this.formData.name,
           end_time: util.dateFormat(this.formData.endTime)
-//        screen_type: this.formData.screenType,
-//        content_type: this.formData.contentType,
-//        avatar_type: this.formData.onWallType,
-//        background: this.backgroundImage
+        }).then(res => {
+          this.$Message.success('修改成功')
+          // this.$router.go(-1)
+          // $bus.$emit('REDIRECT_PANNEL', this.type)
+        }).catch(err => {
+          this.$Message.error(err)
+        })
+      },
+
+      screenInfoSubmit () {
+//        if (!this.formValidate()) return
+        this.submitLoading = true
+        setTimeout(() => {
+          this.submitLoading = false
+        }, 500)
+        ajax.auto(apis.activity.editScreenInfo, {
+          id: this.id,
+          screen_type: this.formData.screenType,
+          content_type: this.formData.contentType
+        }).then(res => {
+          this.$Message.success('修改成功')
+          // this.$router.go(-1)
+          // $bus.$emit('REDIRECT_PANNEL', this.type)
+        }).catch(err => {
+          this.$Message.error(err)
+        })
+      },
+
+      avatarTypeSubmit () {
+//        if (!this.formValidate()) return
+        this.submitLoading = true
+        setTimeout(() => {
+          this.submitLoading = false
+        }, 500)
+        ajax.auto(apis.activity.editAvatarType, {
+          id: this.id,
+          avatar_type: this.formData.onWallType
+        }).then(res => {
+          this.$Message.success('修改成功')
+          // this.$router.go(-1)
+          // $bus.$emit('REDIRECT_PANNEL', this.type)
+        }).catch(err => {
+          this.$Message.error(err)
+        })
+      },
+
+      backgroundSubmit () {
+//        if (!this.formValidate()) return
+        this.submitLoading = true
+        setTimeout(() => {
+          this.submitLoading = false
+        }, 500)
+        ajax.auto(apis.activity.editBackground, {
+          id: this.id,
+          background: this.backgroundImage,
+          avatar_show: this.avatar_show,
+          style_id: this.style_id
         }).then(res => {
           this.$Message.success('修改成功')
           // this.$router.go(-1)
@@ -222,7 +274,7 @@
     created () {
       // this.readFromLocal()
       this.id = this.$route.params.activityId
-      this.menu = this.$route.query.menuItem ? this.$route.query.menuItem : "1"
+      this.menu = this.$route.query.menuItem ? this.$route.query.menuItem : "1-1"
       this.fetchData()
       $bus.$on('SIGNIN_SETTING_RELOAD', () => {
         this.fetchData()
@@ -241,7 +293,6 @@
   .gray {
     color: #757575;
   }
-
   .baseSet .version {
     background-color: #d9e7ff;
     border-bottom: 5px solid #a8c8ff;
@@ -270,5 +321,13 @@
     height: 44px;
     margin: 30px 0px;
     font-size: 16px;
+  }
+  .ivu-radio-group label{
+    border-radius: 0 !important;
+    margin-right: 35px;
+  }
+  .ivu-radio-wrapper-checked{
+    background-color: #adc5ff;
+    color: #fff;
   }
 </style>
