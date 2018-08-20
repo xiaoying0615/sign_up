@@ -1,6 +1,7 @@
 const baseURL = 'http://face.kaowola.com/'
 
 export default {
+  baseUrl:baseURL,
   admin: {
     // 注册验证码
     registerSendSMS: baseURL + 'admin/register/sendSMS',

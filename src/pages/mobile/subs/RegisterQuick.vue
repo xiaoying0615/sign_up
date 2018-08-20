@@ -6,7 +6,7 @@
       <div class="text-align-center">
         <div class="camera-btn" :style="cameraRender" @click="upload">
           <Icon v-if="!avatar" type="camera" :size="clientWidth * 0.2" :style="{ lineHeight: clientWidth * 0.5 + 'px' }"></Icon>
-          <img class="camera-preview" v-else :src="'http://www2.kaowola.com' + avatar">
+          <img class="camera-preview" v-else :src="baseUrl + avatar">
         </div>
       </div>
 
@@ -15,10 +15,9 @@
       </Button>
 
     </div>
-
+    <p class="support-tip"><a href="javascript:;">靠我啦kaowola</a> 免费技术支持</p>
     <PhotoTip ></PhotoTip>
 
-    <!--<div class="mobile" id="prevent-layer" v-if="isModel"></div>-->
   </div>
 </template>
 
@@ -43,7 +42,8 @@
           background: ''
         },
         avatar: '', //'https://static.cxstore.top/images/avatar1.jpg',
-        leftTime: 0
+        leftTime: 0,
+        baseUrl:""
       }
     },
     computed: {
@@ -92,6 +92,7 @@
         }).then(res => {
           this.$Message.success('提交成功')
           this.avatar = ""
+          this.loading = false
         }).catch(err => {
           this.$Message.error(err)
           this.loading = false
@@ -101,6 +102,7 @@
     },
     mounted () {
       this.clientWidth = this.$refs.mobile.clientWidth
+      this.baseUrl = apis.baseUrl
       this.watchAvatar()
     }
   }
