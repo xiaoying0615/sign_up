@@ -21,10 +21,16 @@ import RecordsDrawAward from '@/pages/records/subs/DrawAward'
 import Mobile from '@/pages/mobile/Mobile'
 import MobileRegister from '@/pages/mobile/subs/Register'
 import MobileResponse from '@/pages/mobile/subs/Response'
+import MobileRegisterQuick from '@/pages/mobile/subs/RegisterQuick'
 
 import Screen from '@/pages/screen/Screen'
 import ScreenVertical from '@/pages/screen/subs/Vertical'
+import ScreenVerticalAvatar from '@/pages/screen/subs/VerticalAvatar'
+import ScreenVerticalBeauty from '@/pages/screen/subs/VerticalBeauty'
 import ScreenHorizontal from '@/pages/screen/subs/Horizontal'
+import ScreenHorizontalAvatar from '@/pages/screen/subs/HorizontalAvatar'
+import ScreenHorizontalBeauty from '@/pages/screen/subs/HorizontalBeauty'
+import ScreenSmall from '@/pages/screen/subs/Small'
 
 
 Vue.use(Router)
@@ -154,6 +160,13 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    }, {
+      path: 'signquick',
+      name: 'mobileSignQuick',
+      component: MobileRegisterQuick,
+      meta: {
+        requiresAuth: false
+      }
     }]
   }, {
     path: '/screen/:activityId',
@@ -169,9 +182,44 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    },{
+      path: 'verticalavatar',
+      name: 'screenVerticalAvatar',
+      component: ScreenVertical,
+      meta: {
+        requiresAuth: false
+      }
+    },{
+      path: 'verticalbeauty',
+      name: 'screenVerticalBeauty',
+      component: ScreenVertical,
+      meta: {
+        requiresAuth: false
+      }
     }, {
       path: 'horizontal',
       name: 'screenHorizontal',
+      component: ScreenHorizontal,
+      meta: {
+        requiresAuth: false
+      }
+    }, {
+      path: 'horizontalavatar',
+      name: 'screenHorizontalAvatar',
+      component: ScreenHorizontal,
+      meta: {
+        requiresAuth: false
+      }
+    }, {
+      path: 'horizontalbeauty',
+      name: 'screenHorizontalBeauty',
+      component: ScreenHorizontal,
+      meta: {
+        requiresAuth: false
+      }
+    }, {
+      path: 'small',
+      name: 'screenSmall',
       component: ScreenHorizontal,
       meta: {
         requiresAuth: false

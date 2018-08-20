@@ -6,9 +6,9 @@
   <Loading v-if="loading">正在生成订单，请稍候...</Loading>
 
   <div v-if="!loading && !inPay">
-    
+
     <!-- 付费说明 -->
-    <div class="margin-bottom-20">
+    <div class="margin-bottom-20" v-if="type !== 'openAvatarStyle' && type !== 'openBeautyStyle'">
       <p class="margin-bottom-10">高级活动专享服务</p>
       <p class="margin-bottom-10">1. 参与人数不限制</p>
       <p class="margin-bottom-10">2. 独立专享服务器</p>
@@ -32,7 +32,7 @@
         <Col span="8" class="table-item">{{orderInfo.pay_amount}}</Col>
       </Row>
     </div>
-    
+
     <!-- 延长天数 -->
     <div class="table margin-bottom-10" v-if="type === 'delay'">
       <Row class="table-header">
@@ -53,6 +53,30 @@
 
     <!-- 去除版权 -->
     <div class="table margin-bottom-10" v-if="type === 'removeVersion'">
+      <Row class="table-header">
+        <Col span="12" class="table-header-item table-item bolder">购买内容：</Col>
+        <Col span="12" class="table-header-item table-item bolder">升级费用（元）</Col>
+      </Row>
+      <Row class="table-content">
+        <Col span="12" class="table-item">{{orderInfo.product_name}}</Col>
+        <Col span="12" class="table-item">{{orderInfo.pay_amount}}</Col>
+      </Row>
+    </div>
+
+    <!-- 开通头像主题 -->
+    <div class="table margin-bottom-10" v-if="type === 'openAvatarStyle'">
+      <Row class="table-header">
+        <Col span="12" class="table-header-item table-item bolder">购买内容：</Col>
+        <Col span="12" class="table-header-item table-item bolder">升级费用（元）</Col>
+      </Row>
+      <Row class="table-content">
+        <Col span="12" class="table-item">{{orderInfo.product_name}}</Col>
+        <Col span="12" class="table-item">{{orderInfo.pay_amount}}</Col>
+      </Row>
+    </div>
+
+    <!-- 开通颜值主题 -->
+    <div class="table margin-bottom-10" v-if="type === 'openBeautyStyle'">
       <Row class="table-header">
         <Col span="12" class="table-header-item table-item bolder">购买内容：</Col>
         <Col span="12" class="table-header-item table-item bolder">升级费用（元）</Col>
@@ -191,7 +215,7 @@ export default {
         this.payLoading = false
         this.inPay = true
         if (this.payType === '1') {
-          this.setPayQrcode(res.data.code_url)  
+          this.setPayQrcode(res.data.code_url)
         } else {
           window.location.href = res.data.location_url
         }
@@ -230,13 +254,21 @@ export default {
       this.type = type
       this.activityId = activityId
       this.getServerTime()
-      
+
       if (type === 'upgradePay') {
         this.title = '活动升级'
         this.createOrder()
       }
       if (type === 'removeVersion') {
         this.title = '去除版权'
+        this.createOrder()
+      }
+      if (type === 'openAvatarStyle') {
+        this.title = '开通头像主题'
+        this.createOrder()
+      }
+      if (type === 'openBeautyStyle') {
+        this.title = '开通颜值主题'
         this.createOrder()
       }
       if (type === 'delay') {

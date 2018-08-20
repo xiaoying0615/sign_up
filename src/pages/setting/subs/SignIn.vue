@@ -36,11 +36,11 @@
         </Button>
       </div>
     </div>
-    <div v-if="menu === '1-2'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+    <div v-if="menu === '1-2'" class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
       <p class="part-title">屏幕规格</p>
       <Form label-position="left" :label-width="90" class="margin-left-10 padding-left-10">
         <Form-item label="屏幕方向">
-          <RadioGroup v-model="formData.screenType" type="button" >
+          <RadioGroup v-model="formData.screenType" type="button">
             <Radio :label="1">横向</Radio>
             <Radio :label="2">纵向</Radio>
             <Radio :label="3">小屏</Radio>
@@ -49,7 +49,7 @@
 
         <Form-item label="显示样式">
           <Radio-group v-model="formData.contentType" type="button">
-            <Radio :label="1" >人脸属性</Radio>
+            <Radio :label="1">人脸属性</Radio>
             <Radio :label="2">个人信息</Radio>
           </Radio-group>
         </Form-item>
@@ -61,7 +61,7 @@
         </Button>
       </div>
     </div>
-    <div v-if="menu === '1-3'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+    <div v-if="menu === '1-3'" class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
       <p class="part-title">背景图片</p>
       <Uploader :url="url"
                 :data="extraData"
@@ -70,6 +70,70 @@
 
       <p class="margin-top-20">请上传 2Mb 以内的图片，建议图片宽高比：竖屏9:16，横屏16:9</p>
 
+      <p class="part-title">主题样式</p>
+      <div class="pl-20">
+        <Tabs type="card" v-if="formData.screenType !== 3">
+          <TabPane label="头像模块">
+            <div class="version">
+              <p class="clear">
+                设置是否需要显示/隐藏头像模块
+                <i-switch v-model="avatarShow" size="large" class="fr" :disabled="!avatarStyleOpen && !beautyStyleOpen" >
+                  <span slot="open">显示</span>
+                  <span slot="close">隐藏</span>
+                </i-switch>
+              </p>
+            </div>
+          </TabPane>
+        </Tabs>
+        <ul v-if="formData.screenType === 1" class="style h-style clear">
+          <li :class="{selected: styleId === 1}">
+            <div class="img" @click="styleId = 1">
+              <img src="@/assets/set/h-1.jpg" alt="">
+            </div>
+            <p>默认 <a @click="previewImg($event)">预览</a></p>
+          </li>
+          <li :class="{selected: styleId === 2}">
+            <div class="img" @click="avatarStyleOpen ? styleId = 2 : null">
+              <img src="@/assets/set/h-2.jpg" alt="">
+            </div>
+            <p>头像姓名 <a @click="previewImg($event)">预览</a> <a v-if="!avatarStyleOpen" @click="openAvatarStyle">开通</a></p>
+          </li>
+          <li :class="{selected: styleId === 3}">
+            <div class="img" @click="beautyStyleOpen ? styleId = 3 : null">
+              <img src="@/assets/set/h-3.jpg" alt="">
+            </div>
+            <p>头像颜值 <a @click="previewImg($event)">预览</a> <a v-if="!beautyStyleOpen" @click="openBeautyStyle">开通</a></p>
+          </li>
+        </ul>
+        <ul v-if="formData.screenType === 2" class="style v-style clear">
+          <li  :class="{'selected': styleId === 1}">
+            <div class="img" @click="styleId = 1">
+              <img src="@/assets/set/v-1.jpg" alt="">
+            </div>
+            <p>默认 <a @click="previewImg($event)">预览</a></p>
+          </li>
+          <li :class="{'selected': styleId === 2}">
+            <div class="img" @click="avatarStyleOpen ? styleId = 2 : null">
+              <img src="@/assets/set/v-2.jpg" alt="">
+            </div>
+            <p>头像姓名 <a @click="previewImg($event)">预览</a> <a v-if="!avatarStyleOpen" @click="openAvatarStyle">开通</a></p>
+          </li>
+          <li :class="{'selected': styleId === 3 }">
+            <div class="img" @click="beautyStyleOpen ? styleId = 3 : null">
+              <img src="@/assets/set/v-3.jpg" alt="">
+            </div>
+            <p>头像颜值 <a @click="previewImg($event)">预览</a> <a v-if="!beautyStyleOpen" @click="openBeautyStyle">开通</a></p>
+          </li>
+        </ul>
+        <ul v-if="formData.screenType === 3" class="style">
+          <li class="selected">
+            <div class="img">
+              <img src="@/assets/set/small.jpg" alt="">
+            </div>
+            <p>默认 <a @click="previewImg($event)">预览</a></p>
+          </li>
+        </ul>
+      </div>
       <div class="clear">
         <Button type="primary" class="fr submit"
                 :loading="submitLoading"
@@ -77,13 +141,17 @@
         </Button>
       </div>
     </div>
-    <div v-if="menu === '1-4'"class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
-      <p class="part-title">头像上墙</p>
-      <Radio-group v-model="formData.onWallType">
-        <Radio :label="1">默认</Radio>
-        <Radio :label="2">3D签到</Radio>
-      </Radio-group>
+    <div v-if="menu === '1-4'" class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
+      <p class="part-title">签到墙</p>
 
+      <Form label-position="left" :label-width="90" class="margin-left-10 padding-left-10">
+        <Form-item label="头像上墙">
+          <Radio-group v-model="formData.avatarType" type="button">
+            <Radio :label="1">默认</Radio>
+            <Radio :label="2">3D签到</Radio>
+          </Radio-group>
+        </Form-item>
+      </Form>
       <div class="clear">
         <Button type="primary" class="fr submit"
                 :loading="submitLoading"
@@ -92,15 +160,17 @@
       </div>
     </div>
     <Payment></Payment>
+    <PreviewImg></PreviewImg>
   </div>
 </template>
 <script>
   import Uploader from '@/components/Uploader'
   import Payment from '@/components/Payment'
+  import PreviewImg from '@/pages/setting/components/PreviewImg'
 
   export default {
     name: 'SignIn',
-    components: {Uploader, Payment},
+    components: {Uploader, Payment, PreviewImg},
     data () {
       return {
         loading: true,
@@ -119,11 +189,15 @@
           endTime: '',
           screenType: 1, // horizontal-1 vertical-2 smallScreen-3
           contentType: 1, // terse-1 complex-2
-          onWallType: 1 // default-1 3D-2
+          avatarType: 1 // default-1 3D-2
         },
         status: 0,
-        menu:"1-1",
+        menu: "1-1",
         showVersion: true,
+        avatarShow: false,//	 false代表不显示，true代表显示 -----接口值互换 1=显示头像模块0=不显示
+        styleId: 1, //主题风格ID，1=默认风格 2=头像风格 3=头像颜值风格
+        avatarStyleOpen: false,//false代表否，true头像风格已购买 -----"string,新增字段，1=头像风格已购买0=否",
+        beautyStyleOpen: false,//false代表否，true代表颜值风格已购买 -----"string,新增字段，1=颜值风格已购买0=否"
         endDateLimit: {}
       }
     },
@@ -152,9 +226,13 @@
             this.formData.endTime = data.end_time
             this.formData.screenType = data.screen_type
             this.formData.contentType = data.content_type
-            this.formData.onWallType = data.avatar_type
+            this.formData.avatarType = data.avatar_type
             this.backgroundImage = data.background
             this.showVersion = !!Number(data.version_show)
+            this.avatarShow = !!Number(data.avatar_show)
+            this.styleId = data.style_id
+            this.avatarStyleOpen = !!Number(data.avatar_style_open)
+            this.beautyStyleOpen = !!Number(data.beauty_style_open)
             this.status = data.status
 
             this.endDateLimit = {
@@ -171,6 +249,20 @@
       removeVersion () {
         $bus.$emit('ACTIVITY-PAYMENT', {
           type: 'removeVersion',
+          activityId: this.id
+        })
+      },
+
+      openAvatarStyle () {
+        $bus.$emit('ACTIVITY-PAYMENT', {
+          type: 'openAvatarStyle',
+          activityId: this.id
+        })
+      },
+
+      openBeautyStyle () {
+        $bus.$emit('ACTIVITY-PAYMENT', {
+          type: 'openBeautyStyle',
           activityId: this.id
         })
       },
@@ -260,14 +352,20 @@
         ajax.auto(apis.activity.editBackground, {
           id: this.id,
           background: this.backgroundImage,
-          avatar_show: this.avatar_show,
-          style_id: this.style_id
+          avatar_show: this.avatarShow,
+          style_id: this.styleId
         }).then(res => {
           this.$Message.success('修改成功')
           // this.$router.go(-1)
           // $bus.$emit('REDIRECT_PANNEL', this.type)
         }).catch(err => {
           this.$Message.error(err)
+        })
+      },
+
+      previewImg (event) {
+        $bus.$emit('PREVIEW-IMG', {
+          imgsrc: event.target.parentNode.parentNode.getElementsByTagName("img")[0].src
         })
       }
     },
@@ -279,27 +377,30 @@
       $bus.$on('SIGNIN_SETTING_RELOAD', () => {
         this.fetchData()
       })
+      console.log(this)
     },
     beforeRouteUpdate (to, from, next) {
-      if(to.query.menuItem){
+      if (to.query.menuItem) {
         this.menu = to.query.menuItem
       }
       next()
     }
-
   }
 </script>
 <style scoped>
   .gray {
     color: #757575;
   }
-  .baseSet .version {
+  .pl-20{
+    padding-left: 20px;
+  }
+  .version {
     background-color: #d9e7ff;
     border-bottom: 5px solid #a8c8ff;
     padding: 36px 20px;
   }
 
-  .baseSet .version p {
+  .version p {
     line-height: 30px;
     color: #757575;
   }
@@ -316,18 +417,70 @@
     color: #000;
     padding-right: 60px;
   }
-  .submit{
+
+  .submit {
     width: 150px;
     height: 44px;
     margin: 30px 0px;
     font-size: 16px;
   }
-  .ivu-radio-group label{
+
+  .ivu-radio-group label {
     border-radius: 0 !important;
     margin-right: 35px;
+    width: 100px;
+    text-align: center;
   }
-  .ivu-radio-wrapper-checked{
+
+  .ivu-radio-wrapper-checked {
     background-color: #adc5ff;
     color: #fff;
+  }
+
+  .style li{
+    list-style: none;
+    width: 230px;
+    margin:20px 100px 0 0;
+  }
+  .h-style li,.v-style li{
+    float: left;
+  }
+  .h-style li{
+    width: 394px;
+  }
+  .v-style li{
+    width: 226px;
+  }
+  .style li .img{
+    position: relative;
+    width: 100%;
+    height: auto;
+    border: 5px solid #cccccc;
+    border-radius: 5px;
+  }
+  .style .selected .img{
+    border-color: #70a8ed;
+  }
+
+  .style .selected .img:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 56px;
+    height: 56px;
+    background: url("../../../assets/set/selected.png") no-repeat top right /cover;
+  }
+
+  .style li p{
+    width: 100%;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    padding-top: 5px;
+  }
+  .style li p a{
+    color: #2d8cf0;
+    padding:0 5px;
   }
 </style>

@@ -5,24 +5,6 @@
       <Scanner></Scanner>
     </div>
   </div>
-  <!--<div class="scan-info clear">-->
-    <!--<p class="scan-info-title fl">谁最帅</p>-->
-    <!--<div class="scan-info-body">-->
-      <!--<Avatar class="scan-info-avatar fl" -->
-              <!--v-for="(item, key) in male" :key="key" -->
-              <!--type="vertical"-->
-              <!--:data="item"></Avatar>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div class="scan-info">-->
-    <!--<p class="scan-info-title">谁最美</p>-->
-    <!--<div class="scan-info-body clear">-->
-      <!--<Avatar class="scan-info-avatar fl" -->
-              <!--v-for="(item, key) in female" :key="key" -->
-              <!--type="vertical"-->
-              <!--:data="item"></Avatar>-->
-    <!--</div>-->
-  <!--</div>-->
 </div>
 </template>
 

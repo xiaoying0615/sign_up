@@ -63,7 +63,9 @@ export default {
     // 发送验证码
     sendSMS: baseURL + 'index/face/sendSMS',
     // 获取报名信息
-    signInfo: baseURL + 'index/base/signInfo'
+    signInfo: baseURL + 'index/base/signInfo',
+    // 快捷报名
+    quickClock: baseURL + '/index/base/quickClock'
   },
 
   screen: {
@@ -80,6 +82,10 @@ export default {
     removeVersion: baseURL + 'admin/activity/removeVersion',
     // 活动延期
     delay: baseURL + 'admin/activity/extendedDay',
+    // 开通头像主题
+    openAvatarStyle: baseURL + 'admin/activity/openAvatarStyle',
+    // 开通颜值主题
+    openBeautyStyle: baseURL + 'admin/activity/openBeautyStyle',
     // 支付
     pay: baseURL + 'admin/pay/doPay',
     // 支付流水
