@@ -22,6 +22,16 @@
       </Input>
     </Col>
 
+    <Col span="6" offset="2" class="address-item">
+      <i class="badge"></i>
+      <span class="bolder">快速报名地址：</span>
+    </Col>
+    <Col span="12" class="address-item clear">
+      <Input readonly v-model="address.signQuickLink" id="signQuickLink">
+        <Button slot="append" @click="copy('#signQuickLink input')">复制</Button>
+      </Input>
+    </Col>
+
     <template v-if="address.threedLink">
       <Col span="6" offset="2" class="address-item">
         <i class="badge"></i>
@@ -41,7 +51,7 @@
     </Col>
   </Row>
 
-  
+
 
   <Button slot="footer" type="primary" @click="show = false">确定</Button>
 </Modal>

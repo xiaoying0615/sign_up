@@ -185,6 +185,7 @@ export default {
       $bus.$emit('SHOW_ADDRESS', {
         faceLink: this.data.screen_url,
         signLink: this.data.sign_url,
+        signQuickLink: this.data.quick_sign_url,
         threedLink: this.data['3D_url']
       })
     },
