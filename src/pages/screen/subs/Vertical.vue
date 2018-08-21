@@ -5,41 +5,20 @@
       <Scanner></Scanner>
     </div>
   </div>
-  <!--<div class="scan-info clear">-->
-    <!--<p class="scan-info-title fl">谁最帅</p>-->
-    <!--<div class="scan-info-body">-->
-      <!--<Avatar class="scan-info-avatar fl" -->
-              <!--v-for="(item, key) in male" :key="key" -->
-              <!--type="vertical"-->
-              <!--:data="item"></Avatar>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div class="scan-info">-->
-    <!--<p class="scan-info-title">谁最美</p>-->
-    <!--<div class="scan-info-body clear">-->
-      <!--<Avatar class="scan-info-avatar fl" -->
-              <!--v-for="(item, key) in female" :key="key" -->
-              <!--type="vertical"-->
-              <!--:data="item"></Avatar>-->
-    <!--</div>-->
-  <!--</div>-->
+
 </div>
 </template>
 
 <script>
 import Scanner from '../components/Scanner'
-import Avatar from '../components/Avatar'
 
 export default {
   name: 'Vertical',
-  components: { Scanner, Avatar },
+  components: { Scanner},
   data () {
     return {
       scannerBoxWidth: 0,
-      scannerBoxHeight: 0,
-
-      female: [],
-      male: []
+      scannerBoxHeight: 0
     }
   },
   computed: {
@@ -57,8 +36,8 @@ export default {
 
       return {
         width: baseSize + 'px',
-        height: baseSize + 'px',
-        bottom: margin * 2 + 'px'
+        height: baseSize + 'px'
+//        bottom: margin * 2 + 'px'
       }
     }
   },
@@ -67,10 +46,7 @@ export default {
     this.scannerBoxHeight = this.$refs.scannerBox.clientHeight
   },
   created () {
-    $bus.$on('SCREEN_BEAUTY_RANK', rank => {
-      this.male = rank.male
-      this.female = rank.female
-    })
+
   }
 }
 </script>
@@ -78,7 +54,7 @@ export default {
 <style scoped>
 .scanner-box {
   position: relative;
-  height: 76vh;
+  height: 85vh;
 }
 
 .scan-info {
@@ -92,7 +68,8 @@ export default {
 .scanner-body {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%,-50%);
 }
 
 .scan-info-title {

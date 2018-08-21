@@ -11,7 +11,7 @@
     <Video2Image ref="video2Image" @on-error="videoError"></Video2Image>
   </div>
 
-  <UserCard v-if="user" v-model="user" :complex="complex" :type="type"></UserCard>
+  <UserCard v-if="user" v-model="user" :complex="complex"></UserCard>
 </div>
 </template>
 
@@ -108,7 +108,7 @@ export default {
 
   created () {
     $bus.$on('SCREEN_CONTENT_COMPLEX', complex => {
-      this.complex = true
+      this.complex = complex
     })
   },
   destroyed () {

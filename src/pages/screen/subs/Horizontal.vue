@@ -1,83 +1,94 @@
 <template>
-<div class="clear">
-  <!--<div class="scan-info full-height fl">-->
-    <!--<p class="scan-info-title">谁最帅</p>-->
-    <!--<div class="scan-info-body">-->
-      <!--<Avatar class="scan-info-avatar fl" -->
-              <!--v-for="(item, key) in male" :key="key" -->
-              <!--type="horizontal"-->
-              <!--:data="item"></Avatar>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div class="scan-info full-height fr">-->
-    <!--<p class="scan-info-title">谁最美</p>-->
-    <!--<div class="scan-info-body">-->
-      <!--<Avatar class="scan-info-avatar fl" -->
-              <!--v-for="(item, key) in female" :key="key" -->
-              <!--type="horizontal"-->
-              <!--:data="item"></Avatar>-->
-    <!--</div>-->
-  <!--</div>-->
-  <div class="scanner-body-box full-height relative">
-    <div class="scanner-body position-center">
-      <Scanner></Scanner>
+  <div>
+    <div ref="scannerBox" class="scanner-box">
+      <div class="scanner-body" :style="scannerRender">
+        <Scanner></Scanner>
+      </div>
     </div>
-  </div>
 
-</div>
+  </div>
 </template>
 
 <script>
-import Scanner from '../components/Scanner'
-import Avatar from '../components/Avatar'
+  import Scanner from '../components/Scanner'
 
-export default {
-  name: 'Horizontal',
-  components: { Scanner, Avatar },
-  data () {
-    return {
-      female: [],
-      male: []
+  export default {
+    name: 'Horizontal',
+    components: { Scanner},
+    data () {
+      return {
+        scannerBoxWidth: 0,
+        scannerBoxHeight: 0
+      }
+    },
+    computed: {
+      scannerRender () {
+        let baseSize = 0
+        let margin = 0
+
+        if (this.scannerBoxWidth * 0.9 < this.scannerBoxHeight) {
+          margin = this.scannerBoxWidth * 0.05
+          baseSize = this.scannerBoxWidth - margin * 2
+        } else {
+          margin = this.scannerBoxHeight * 0.05
+          baseSize = this.scannerBoxHeight - margin * 2
+        }
+
+        return {
+          width: baseSize + 'px',
+          height: baseSize + 'px'
+//        bottom: margin * 2 + 'px'
+        }
+      }
+    },
+    mounted () {
+      this.scannerBoxWidth = this.$refs.scannerBox.clientWidth
+      this.scannerBoxHeight = this.$refs.scannerBox.clientHeight
+    },
+    created () {
+
     }
-  },
-  created () {
-    $bus.$on('SCREEN_BEAUTY_RANK', rank => {
-      this.male = rank.male
-      this.female = rank.female
-    })
   }
-}
 </script>
 
 <style scoped>
-.scanner-body-box {
-  margin: 0 11vw;
-}
+  .scanner-box {
+    position: relative;
+    height: 85vh;
+  }
 
-.scanner-body {
-  width: 60vh;
-  height: 60vh;
-}
+  .scan-info {
+    position: relative;
+    height: 11vh;
+    color: #fff;
+    margin-top: 1vh;
+    background: rgba(255, 255, 255, .2);
+  }
 
-.scan-info {
-  width: 11vw;
-  color: #fff;
-  background: rgba(255, 255, 255, .2);
-}
+  .scanner-body {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
 
-.scan-info-title {
-  height: 2vw;
-  margin: 10px 0;
-  text-align: center;
-  font-size: 2vw;
-  line-height: 1.2;
-}
+  .scan-info-title {
+    position: absolute;
+    width: 4vw;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 10px;
+    text-align: center;
+    font-size: 4vw;
+    line-height: 1.2;
+  }
 
-.scan-info-body {
-  height: calc( 100vh - 2vw - 20px );
-}
+  .scan-info-body {
+    height: 100%;
+    margin-left: calc( 4vw + 20px );
+  }
 
-.scan-info-avatar {
-  height: 20%;
-}
+  .scan-info-avatar {
+    width: 20%;
+  }
 </style>

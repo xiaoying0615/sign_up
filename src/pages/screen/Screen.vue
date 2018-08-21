@@ -47,6 +47,9 @@
         this.background = data.background
         this.versionShow = Number(data.version_show) === 1 ? true : false
         $bus.$emit('SCREEN_CONTENT_COMPLEX', Number(data.content_type) === 1 ? false : true)
+        $bus.$emit('SCREEN_CONTENT_STYLE', {
+          styleId:data.style_id
+        })
         $bus.$emit('SCREEN_BEAUTY_RANK', {
           avatarShow:data.avatar_show,
           female: data.female_list,

@@ -1,6 +1,6 @@
 <template>
 <div class="user-card-box">
-  <div v-if="type === 'small'">
+  <div v-if="style === 1">
     <div v-if="!complex"
          class="user-card card-terse position-center bg-white"
          :style="raduisRender">
@@ -58,14 +58,12 @@ export default {
     },
     data: {
       type: Object
-    },
-    type:{
-        type:String
     }
   },
   data () {
     return {
-      baseFontSize: 14
+      baseFontSize: 14,
+      style:1
     }
   },
   computed: {
@@ -85,6 +83,11 @@ export default {
         this.$refs.cardComplex.clientHeight / 12 > this.baseFontSize) {
       this.baseFontSize = this.$refs.cardComplex.clientHeight / 12
     }
+  },
+  created (){
+    $bus.$on('SCREEN_CONTENT_STYLE', style => {
+      this.style = style
+    })
   }
 }
 </script>
@@ -109,7 +112,7 @@ export default {
 .card-terse {
   width: 50%;
   max-width: 420px;
-  min-width: 220px;
+  min-width: 150px;
   padding: 10px;
   text-align: center;
 }
@@ -127,8 +130,7 @@ export default {
 }
 
 .card-complex {
-  width: 70%;
-  min-width: 80vw;
+  width: 80%;
 }
 
 .card-complex-avatar {
