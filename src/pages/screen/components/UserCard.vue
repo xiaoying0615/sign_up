@@ -1,23 +1,46 @@
 <template>
 <div class="user-card-box">
-  <div v-if="!complex"
-       class="user-card card-terse position-center bg-white"
-       :style="raduisRender">
-    <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
-    <h1 class="card-terse-name text-over">{{data.name}}</h1>
-    <p class="card-terse-welcome margin-bottom-10">欢迎您的到来！</p>
-    <p class="red">颜值: {{data.score}}分</p>
-  </div>
+  <div v-if="type === 'small'">
+    <div v-if="!complex"
+         class="user-card card-terse position-center bg-white"
+         :style="raduisRender">
+      <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
+      <h1 class="card-terse-name text-over">{{data.name}}</h1>
+      <p class="card-terse-welcome margin-bottom-10">欢迎光临</p>
+      <p class="red">颜值: {{data.score}}分</p>
+    </div>
 
-  <div ref="cardComplex"
-       v-else
-       class="user-card card-complex position-center bg-white clear"
-       :style="raduisRender">
-    <img class="card-complex-avatar fl" :src="data.avatar">
-    <div class="card-complex-content" :style="fontRender">
-      <p v-for="(item, key) in data.form" :key="key">{{item.value}}</p>
+    <div ref="cardComplex"
+         v-else
+         class="user-card card-complex position-center bg-white clear"
+         :style="raduisRender">
+      <img class="card-complex-avatar fl" :src="data.avatar">
+      <div class="card-complex-content" :style="fontRender">
+        <p v-for="(item, key) in data.form" :key="key">{{item.value}}</p>
+      </div>
     </div>
   </div>
+  <div v-else>
+    <div v-if="!complex"
+         class="user-card card-terse position-center bg-white"
+         :style="raduisRender">
+      <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
+      <h1 class="card-terse-name text-over">{{data.name}}</h1>
+      <p class="card-terse-welcome margin-bottom-10">欢迎光临</p>
+      <p class="red">颜值: {{data.score}}分</p>
+    </div>
+
+    <div ref="cardComplex"
+         v-else
+         class="user-card card-complex position-center bg-white clear"
+         :style="raduisRender">
+      <img class="card-complex-avatar fl" :src="data.avatar">
+      <div class="card-complex-content" :style="fontRender">
+        <p v-for="(item, key) in data.form" :key="key">{{item.value}}</p>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 </template>
@@ -35,6 +58,9 @@ export default {
     },
     data: {
       type: Object
+    },
+    type:{
+        type:String
     }
   },
   data () {
@@ -55,7 +81,7 @@ export default {
     }
   },
   mounted () {
-    if (this.$refs.cardComplex && 
+    if (this.$refs.cardComplex &&
         this.$refs.cardComplex.clientHeight / 12 > this.baseFontSize) {
       this.baseFontSize = this.$refs.cardComplex.clientHeight / 12
     }
@@ -81,7 +107,7 @@ export default {
 }
 
 .card-terse {
-  width: 30%;
+  width: 50%;
   max-width: 420px;
   min-width: 220px;
   padding: 10px;
@@ -102,7 +128,7 @@ export default {
 
 .card-complex {
   width: 70%;
-  min-width: 400px;
+  min-width: 80vw;
 }
 
 .card-complex-avatar {

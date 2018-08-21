@@ -185,14 +185,14 @@ const router = new Router({
     },{
       path: 'verticalavatar',
       name: 'screenVerticalAvatar',
-      component: ScreenVertical,
+      component: ScreenVerticalAvatar,
       meta: {
         requiresAuth: false
       }
     },{
       path: 'verticalbeauty',
       name: 'screenVerticalBeauty',
-      component: ScreenVertical,
+      component: ScreenVerticalBeauty,
       meta: {
         requiresAuth: false
       }
@@ -206,21 +206,21 @@ const router = new Router({
     }, {
       path: 'horizontalavatar',
       name: 'screenHorizontalAvatar',
-      component: ScreenHorizontal,
+      component: ScreenHorizontalAvatar,
       meta: {
         requiresAuth: false
       }
     }, {
       path: 'horizontalbeauty',
       name: 'screenHorizontalBeauty',
-      component: ScreenHorizontal,
+      component: ScreenHorizontalBeauty,
       meta: {
         requiresAuth: false
       }
     }, {
       path: 'small',
       name: 'screenSmall',
-      component: ScreenHorizontal,
+      component: ScreenSmall,
       meta: {
         requiresAuth: false
       }

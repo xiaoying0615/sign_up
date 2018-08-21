@@ -2,26 +2,25 @@
 <div>
   <div ref="scannerBox" class="scanner-box">
     <div class="scanner-body" :style="scannerRender">
-      <Scanner></Scanner>
+      <Scanner :type = "type"></Scanner>
     </div>
   </div>
+
 </div>
 </template>
 
 <script>
 import Scanner from '../components/Scanner'
-import Avatar from '../components/Avatar'
+//import Avatar from '../components/Avatar'
 
 export default {
-  name: 'Vertical',
-  components: { Scanner, Avatar },
+  name: 'Small',
+  components: { Scanner},
   data () {
     return {
       scannerBoxWidth: 0,
       scannerBoxHeight: 0,
-
-      female: [],
-      male: []
+      type:"small"
     }
   },
   computed: {
@@ -39,8 +38,8 @@ export default {
 
       return {
         width: baseSize + 'px',
-        height: baseSize + 'px',
-        bottom: margin * 2 + 'px'
+        height: baseSize + 'px'
+//        bottom: margin * 2 + 'px'
       }
     }
   },
@@ -49,10 +48,6 @@ export default {
     this.scannerBoxHeight = this.$refs.scannerBox.clientHeight
   },
   created () {
-    $bus.$on('SCREEN_BEAUTY_RANK', rank => {
-      this.male = rank.male
-      this.female = rank.female
-    })
   }
 }
 </script>
@@ -60,7 +55,7 @@ export default {
 <style scoped>
 .scanner-box {
   position: relative;
-  height: 76vh;
+  height: 85vh;
 }
 
 .scan-info {
@@ -74,7 +69,8 @@ export default {
 .scanner-body {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  top:50%;
+  transform: translate(-50%,-50%);
 }
 
 .scan-info-title {
@@ -96,4 +92,5 @@ export default {
 .scan-info-avatar {
   width: 20%;
 }
+
 </style>

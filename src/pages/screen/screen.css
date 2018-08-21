@@ -20,3 +20,11 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+.support-tip{
+  position: fixed;
+  bottom: 10px;
+  text-align: center;
+  width: 100%;
+  color: #ffffff;
+}
