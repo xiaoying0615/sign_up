@@ -2,7 +2,7 @@
   <div>
     <div ref="scannerBox" class="scanner-box">
       <div class="scanner-body" :style="scannerRender">
-        <Scanner></Scanner>
+        <Scanner :scannerStyle = "scannerStyle"></Scanner>
       </div>
     </div>
 
@@ -18,7 +18,8 @@
     data () {
       return {
         scannerBoxWidth: 0,
-        scannerBoxHeight: 0
+        scannerBoxHeight: 0,
+        scannerStyle:"horizintal"
       }
     },
     computed: {

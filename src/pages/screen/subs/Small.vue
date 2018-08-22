@@ -2,7 +2,7 @@
 <div>
   <div ref="scannerBox" class="scanner-box">
     <div class="scanner-body" :style="scannerRender">
-      <Scanner :type = "type"></Scanner>
+      <Scanner :scannerStyle = "scannerStyle"></Scanner>
     </div>
   </div>
 
@@ -20,7 +20,7 @@ export default {
     return {
       scannerBoxWidth: 0,
       scannerBoxHeight: 0,
-      type:"small"
+      scannerStyle:"small"
     }
   },
   computed: {
