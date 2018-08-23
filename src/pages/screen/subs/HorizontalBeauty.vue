@@ -13,8 +13,8 @@
         <Scanner :scannerStyle = "scannerStyle" @getBeautyInfo="getBeautyInfo"></Scanner>
       </div>
     </div>
+    <span v-if="info.avatarShow" class="beauty-list-num"><i></i>{{info.signNum}}人 </span>
     <div v-if="info.avatarShow" class="beauty-list beauty-right">
-      <span class="avatar-num"><i></i>{{info.signNum}}人</span>
         <ul v-if="info.female !== []">
           <li v-for="(item, key) in info.female" :key="key">
             <img :src="item.avatar" alt="">
@@ -51,10 +51,10 @@
         let margin = 0
 
         if (this.scannerBoxWidth * 0.9 < this.scannerBoxHeight) {
-          margin = this.scannerBoxWidth * 0.3
+          margin = this.scannerBoxWidth * 0.25
           baseSize = this.scannerBoxWidth - margin * 2
         } else {
-          margin = this.scannerBoxHeight * 0.3
+          margin = this.scannerBoxHeight * 0.25
           baseSize = this.scannerBoxHeight - margin * 2
         }
 
@@ -87,66 +87,22 @@
     height: 100vh;
   }
 
-  .scan-info {
-    position: relative;
-    height: 11vh;
-    color: #fff;
-    margin-top: 1vh;
-    background: rgba(255, 255, 255, .2);
-  }
-
   .scanner-body {
     position: absolute;
     left: 50%;
-    top: 30%;
+    top: 50%;
     transform: translate(-50%,-50%);
   }
-
-  .scan-info-title {
+  .beauty-list-num{
+    display: block;
     position: absolute;
-    width: 4vw;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0 10px;
-    text-align: center;
-    font-size: 4vw;
-    line-height: 1.2;
-  }
-
-  .scan-info-body {
-    height: 100%;
-    margin-left: calc( 4vw + 20px );
-  }
-
-  .scan-info-avatar {
-    width: 20%;
-  }
-
-
-  .beauty-list{
-    position: fixed;
-    top:20vh;
-    width:18vw;
-    height:calc(80vh - 5px);
-    overflow: hidden;
-    margin:auto;
-  }
-  .beauty-left{
-    left: 5px;
-  }
-  .beauty-right{
-    right:5px;
-  }
-  .beauty-list .avatar-num{
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    right: 5px;
+    top: 10px;
+    right: 10px;
     background-color: rgba(255,255,255,0.3);
     border-radius: 2px;
     padding: 2px 8px;
   }
-  .beauty-list .avatar-num i{
+  .beauty-list-num i{
     display: inline-block;
     margin-right: 4px;
     height: 6px;
@@ -154,11 +110,25 @@
     border-radius: 50%;
     background-color: red;
   }
+  .beauty-list{
+    position: fixed;
+    top:20vh;
+    width:18vw;
+    height:calc(80vh - 10px);
+    overflow: hidden;
+    margin:auto;
+  }
+  .beauty-left{
+    left: 10px;
+  }
+  .beauty-right{
+    right:10px;
+  }
+
   .beauty-list ul{
-    margin-top: 30px;
     display: flex;
     background-color: rgba(255,255,255,0.3);
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 5px;
     flex-wrap:wrap;
     align-items: start;

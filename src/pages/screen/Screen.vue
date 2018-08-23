@@ -9,7 +9,8 @@
 </template>
 
 <script>
-  import defaultBackground from '@/assets/bg-screen.jpg'
+  import defaultHBackground from '@/assets/bg-screen-h.jpg'
+  import defaultVBackground from '@/assets/bg-screen-v.jpg'
 
   import audioSuccess from '@/assets/success.wav'
   import audioAlready from '@/assets/already.wav'
@@ -35,13 +36,22 @@
     },
     computed: {
       backgroundRender () {
+        //小屏没有背景色
+        if (location.href.indexOf("small") > 0) {
+          this.background = ""
+          this.backgroundColor = "#000"
+        }else if (location.href.indexOf("horizontal") > 0 && this.background === "") {
+          this.background = defaultHBackground
+        }else if (location.href.indexOf("vertical") > 0 && this.background === "") {
+          this.background = defaultVBackground
+        }
         if (this.backgroundColor !== "") {
           return {
             background: `${this.backgroundColor}`
           }
         } else {
           return {
-            background: `url(${this.background ? this.background : defaultBackground}) center center / cover no-repeat`
+            background: `url(${this.background ? this.background : defaultHBackground}) center center / cover no-repeat`
           }
         }
       }
@@ -70,10 +80,7 @@
     },
     created () {
       this.initScreen()
-      //小屏没有背景色
-      if (location.href.indexOf("small") > 0) {
-        this.backgroundColor = "#000"
-      }
+
     }
   }
 </script>

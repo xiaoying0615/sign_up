@@ -41,9 +41,13 @@
       <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
       <img src="@/assets/beauty_bg.png" alt="" class="stylebg">
       <div class="card-content clear">
-        <h1 class="card-terse-name text-over">{{data.name}}<Icon type="md-male" /></h1>
+        <h1 class="card-terse-name text-over">{{data.name}}<Icon v-if="data.gender === 1" type="male" /> <Icon v-else type="female" /></h1>
         <div class="card-terse-welcome margin-bottom-10">
           <p>欢迎光临</p>
+          <i class="welcome-corner corner-top-left"></i>
+          <i class="welcome-corner corner-top-right"></i>
+          <i class="welcome-corner corner-bottom-left"></i>
+          <i class="welcome-corner corner-bottom-right"></i>
         </div>
         <div class="line"></div>
         <ul v-if="data.form !== []" :style="fontRender">
@@ -166,22 +170,21 @@ export default {
   .card-avatar{
     position: relative;
     width: 100%;
-    max-width: 420px;
-    min-width: 150px;
     text-align: center;
     color: #000;
   }
   .card-avatar img{
     width:100%;
+    max-width: 100%;
     border-radius: 50%;
-    border: 5px solid #cfa972;
+    border: 5px solid #d5bc77;
   }
   .card-avatar .card-content {
     width:100%;
     height:auto;
     margin-top:-51%;
     padding:50% 0 15% 0%;
-    border: 5px solid #cfa972;
+    border: 5px solid #d5bc77;
     border-radius: 0 0 50% 50%;
     background-color: rgba(255,255,255,0.3);
   }
@@ -239,7 +242,7 @@ export default {
   position: relative;
 }
 
- .card-avatar.horizontal .card-content{
+.card-avatar.horizontal .card-content{
   position: absolute;
    top: 51%;
   right: 0%;
@@ -248,51 +251,110 @@ export default {
   width:40vw;
   height:100%;
   padding:20% 50% 0% 10%;
-  border: 5px solid #cfa972;
+  border: 5px solid #d5bc77;
   border-radius: 50% 0 0 50%;
   background-color: rgba(255,255,255,0.3);
   }
 
+/*beauty theme*/
 .card-beauty .line{
-  width: 95%;
+  width: 100%;
 }
 .card-beauty{
   position: relative;
   width: 100%;
-  max-width: 420px;
-  min-width: 150px;
   text-align: center;
   color: #000;
 }
-.card-beauty img:not(.stylebg){
+.card-beauty .card-terse-avatar {
   width:100%;
   border-radius: 50%;
-  border: 5px solid #cfa972;
+  border: 5px solid #d5bc77;
+  max-width: 100%;
 }
 .card-beauty .stylebg{
   position: absolute;
-  top:56%;
+  top:0;
   left: 50%;
   width: 100%;
+  padding-top: 86%;
   transform: translateX(-50%);
   z-index:1;
+}
+.card-beauty .card-terse-name{
+  font-size: 30px;
+}
+.card-beauty .card-terse-name i{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 26px;
+  font-size: 14px;
+  border:2px solid #9fa0a9;
+  color: #9fa0a9;
+  background-color: #fa8cec;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+.card-beauty .card-terse-name i.ivu-icon-male{
+  background-color: #61e5f8;
 }
 .card-beauty .card-content {
   width:100%;
   height:auto;
-  margin-top: 20px;
-  padding:1% 5%;
+  margin-top: 9%;
+  padding:2% 3%;
   border-radius: 5px;
   background-color: rgba(255,255,255,0.3);
 }
 .card-beauty .card-terse-welcome{
-  background-color: rgba(255,255,255,0.3);
+  position: relative;
+  display: inline-block;
+  width: auto;
   padding: 4px;
-  width: 60%;
-  margin:auto;
+  background-color: rgba(255,255,255,0.3);
 }
 .card-beauty .card-terse-welcome p{
-  background-color: #ffd687;
+  height: 30px;
+  line-height: 30px;
+  padding:0 10px;
+  min-width:160px;
+  background: linear-gradient(left,#f5e99d, #d5bd78);
+}
+.card-beauty .card-terse-welcome .welcome-corner {
+  position: absolute;
+  z-index: 2;
+  width: 4px;
+  height: 4px;
+  background-color: transparent;
+}
+
+.card-beauty .card-terse-welcome .corner-top-left {
+  left: -1px;
+  top: -1px;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+}
+
+.card-beauty .card-terse-welcome .corner-top-right {
+  right: -1px;
+  top: -1px;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+}
+
+.card-beauty .card-terse-welcome .corner-bottom-left {
+  left: -1px;
+  bottom: -1px;
+  border-bottom: 2px solid #fff;
+  border-left: 2px solid #fff;
+}
+
+.card-beauty .card-terse-welcome .corner-bottom-right {
+  right: -1px;
+  bottom: -1px;
+  border-bottom: 2px solid #fff;
+  border-right: 2px solid #fff;
 }
 .card-beauty ul{
   display: flex;
@@ -301,6 +363,7 @@ export default {
   overflow: hidden;
 }
 .card-beauty ul li{
+  flex-grow: 1;
   list-style: none;
   overflow: hidden;
   word-break: keep-all;

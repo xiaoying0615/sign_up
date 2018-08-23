@@ -97,13 +97,13 @@
 
           // 匹配成功时停止扫描展示用户信息
 //         3秒后用户信息消失继续扫描
-        clearInterval(interval)
-        timeout = setTimeout(() => {
-          this.isScroll = true
-          this.user = null
-          this.startScan()
-          clearTimeout(timeout)
-        }, 3000)
+//        clearInterval(interval)
+//        timeout = setTimeout(() => {
+//          this.isScroll = true
+//          this.user = null
+//          this.startScan()
+//          clearTimeout(timeout)
+//        }, 3000)
         })
       },
 
@@ -116,7 +116,8 @@
     mounted () {
       this.$audioSuccess = document.getElementById('audio-success')
       this.$audioAlready = document.getElementById('audio-already')
-      this.startScan()
+//      this.startScan()
+      this.faceDetect()
     },
 
     created () {
@@ -225,6 +226,6 @@
     display: none;
   }
   .scanner.yellowBorder .scanner-camera{
-    border: 5px solid #cfa972;
+    border: 5px solid #d5bc77;
   }
 </style>

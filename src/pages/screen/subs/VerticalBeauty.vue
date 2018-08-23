@@ -50,10 +50,10 @@
         let margin = 0
 
         if (this.scannerBoxWidth * 0.9 < this.scannerBoxHeight) {
-          margin = this.scannerBoxWidth * 0.3
+          margin = this.scannerBoxWidth * 0.2
           baseSize = this.scannerBoxWidth - margin * 2
         } else {
-          margin = this.scannerBoxHeight * 0.3
+          margin = this.scannerBoxHeight * 0.2
           baseSize = this.scannerBoxHeight - margin * 2
         }
 
@@ -97,7 +97,7 @@
   .scanner-body {
     position: absolute;
     left: 50%;
-    top: 30%;
+    top: 50%;
     transform: translate(-50%,-50%);
   }
 
@@ -125,8 +125,7 @@
     position: fixed;
     left: 50%;
     bottom:30px;
-    width:100%;
-    max-width:600px;
+    width:99%;
     height: auto;
     overflow: hidden;
     transform: translateX(-50%);
@@ -155,21 +154,20 @@
   }
   .avatar-list ul{
     display: flex;
-    background-color: rgba(255,255,255,0.3);
-    flex-wrap:wrap;
     height:28vw;
-    max-height:170px;
+    flex-wrap:wrap;
     align-items: flex-start;
     overflow: hidden;
+    background-color: rgba(255,255,255,0.3);
   }
   .avatar-list ul:first-child{
     margin-top: 30px;
-    padding: 5px 5px 0;
-    border-radius: 5px 5px 0 0;
+    padding: 10px 10px 0;
+    border-radius: 10px 10px 0 0;
   }
   .avatar-list ul:nth-child(2){
-    padding: 0px 5px 5px;
-    border-radius: 0 0 5px 5px;
+    padding: 0px 10px 10px;
+    border-radius: 0 0 10px 10px;
   }
   .avatar-list ul li{
     position: relative;
