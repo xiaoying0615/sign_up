@@ -1,9 +1,9 @@
 <template>
-<div class="container clear">
+<div class="container clear margin-10">
   <div class="fl" style="200px;">
     <Affix :offset-top="70">
       <Menu ref="menu"
-            mode="vertical" theme="light" width="200px" 
+            mode="vertical" theme="light" width="200px"
             :active-name="activeMenu"
             @on-select="menuSelected">
         <Menu-item name="signIn">
@@ -44,3 +44,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .subview {
+    margin-left: 210px !important;
+  }
+
+</style>
