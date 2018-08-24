@@ -135,9 +135,9 @@
     position: absolute;
     top: 0;
     right: 1px;
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 2px;
     padding: 2px 8px;
+    border-radius: 2px;
+    background-color: rgba(255,255,255,0.3);
   }
   .avatar-list .avatar-num i{
     display: inline-block;
@@ -157,6 +157,8 @@
     height:28vw;
     flex-wrap:wrap;
     align-items: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
     overflow: hidden;
     background-color: rgba(255,255,255,0.3);
   }

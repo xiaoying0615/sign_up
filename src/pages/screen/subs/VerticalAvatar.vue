@@ -42,10 +42,10 @@
         let margin = 0
 
         if (this.scannerBoxWidth * 0.9 < this.scannerBoxHeight) {
-          margin = this.scannerBoxWidth * 0.3
+          margin = this.scannerBoxWidth * 0.2
           baseSize = this.scannerBoxWidth - margin * 2
         } else {
-          margin = this.scannerBoxHeight * 0.3
+          margin = this.scannerBoxHeight * 0.2
           baseSize = this.scannerBoxHeight - margin * 2
         }
 
@@ -119,8 +119,7 @@
     position: fixed;
     left: 50%;
     bottom:30px;
-    width:100%;
-    max-width:600px;
+    width:99%;
     height: auto;
     overflow: hidden;
     transform: translateX(-50%);
@@ -130,9 +129,9 @@
     position: absolute;
     top: 0;
     right: 1px;
-    background-color: rgba(255,255,255,0.3);
     border-radius: 2px;
     padding: 2px 8px;
+    background-color: rgba(255,255,255,0.3);
   }
   .avatar-list .avatar-num i{
     display: inline-block;
@@ -142,17 +141,21 @@
     border-radius: 50%;
     background-color: red;
   }
+
   .avatar-list ul{
-    margin-top: 30px;
     display: flex;
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 5px;
-    padding: 5px;
+    height:42vw;
     flex-wrap:wrap;
-    align-items: start;
-    height:56vw;
-    max-height:340px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
+    margin-top: 30px;
+    padding: 10px;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.3);
   }
+
   .avatar-list ul li{
     position: relative;
     width:13%;

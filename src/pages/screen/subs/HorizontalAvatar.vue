@@ -42,10 +42,10 @@
         let margin = 0
 
         if (this.scannerBoxWidth * 0.9 < this.scannerBoxHeight) {
-          margin = this.scannerBoxWidth * 0.3
+          margin = this.scannerBoxWidth * 0.25
           baseSize = this.scannerBoxWidth - margin * 2
         } else {
-          margin = this.scannerBoxHeight * 0.3
+          margin = this.scannerBoxHeight * 0.25
           baseSize = this.scannerBoxHeight - margin * 2
         }
 
@@ -142,16 +142,18 @@
     background-color: red;
   }
   .avatar-list ul{
-    margin-top: 30px;
     display: flex;
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 5px;
-    padding: 5px;
-    flex-wrap:wrap;
-    align-items: start;
-    justify-content:center;
-    width:100%;
+    width: 100%;
     height: 100%;
+    flex-wrap:wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
+    padding: 5px;
+    margin-top: 30px;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: rgba(255,255,255,0.3);
   }
   .avatar-list ul li{
     position: relative;

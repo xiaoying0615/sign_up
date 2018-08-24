@@ -352,7 +352,7 @@
         ajax.auto(apis.activity.editBackground, {
           id: this.id,
           background: this.backgroundImage,
-          avatar_show: this.avatarShow,
+          avatar_show: this.avatarShow ? 1: 0,
           style_id: this.styleId
         }).then(res => {
           this.$Message.success('修改成功')

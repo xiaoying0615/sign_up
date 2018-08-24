@@ -127,14 +127,16 @@
 
   .beauty-list ul{
     display: flex;
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 10px;
-    padding: 5px;
-    flex-wrap:wrap;
-    align-items: start;
-    align-content: flex-start;
     width:100%;
     height: 100%;
+    flex-wrap:wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
+    padding: 5px;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.3);
   }
   .beauty-list ul li{
     position: relative;
