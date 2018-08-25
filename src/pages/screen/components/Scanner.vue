@@ -6,7 +6,7 @@
     <i class="scanner-decorate scanner-corner corner-bottom-right"></i>
 
 
-    <div :class="{ 'scanner-scroll': isScroll}" class="scanner-camera position-center">
+    <div :class="{ 'scanner-scroll': isScroll,'small': scannerStyle === 'small'}" class="scanner-camera position-center" >
       <!-- <i class="scanner-decorate scanner-bar"></i> -->
       <Video2Image ref="video2Image" @on-error="videoError"></Video2Image>
     </div>
@@ -76,6 +76,9 @@
           const data = res.data
           this.playAudio(res.status === 2 ? 'already' : 'success')
           this.isScroll = false
+          if(data.form){
+            data.form.splice(data.form.findIndex(item => item.type === 4), 1)
+          }
           this.user = {
             avatar: data.avatar,
             name: data.nick,
@@ -186,7 +189,11 @@
     background: #000;
     overflow: hidden;
   }
-
+  .scanner-camera.small{
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
   .scanner-scroll:before {
     content: "";
     display: block;

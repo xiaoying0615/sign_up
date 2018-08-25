@@ -387,7 +387,6 @@
       $bus.$on('SIGNIN_SETTING_RELOAD', () => {
         this.fetchData()
       })
-      console.log(this)
     },
     beforeRouteUpdate (to, from, next) {
       if(this.isSave === true){

@@ -1,5 +1,5 @@
 <template>
-  <div class="user-card-box">
+  <div class="user-card-box" :class="{small:scannerStyle === 'small' }">
     <div v-if="styleId === 1">
       <div v-if="!complex"
            class="user-card card-terse position-center bg-white"
@@ -134,6 +134,9 @@
     top: 0;
     font-size: 14px;
     z-index: 11;
+  }
+  .user-card-box.small {
+    background-color: #000;
   }
 
   .user-card {
