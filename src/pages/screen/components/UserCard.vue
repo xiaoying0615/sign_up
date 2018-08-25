@@ -207,6 +207,7 @@
   .card-avatar .card-terse-welcome p, .card-beauty .card-terse-welcome p {
     padding: 10px;
     min-width: 160px;
+    background-color: #d5bd78;
     background: linear-gradient(left, #f5e99d, #d5bd78);
   }
 

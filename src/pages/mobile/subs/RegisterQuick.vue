@@ -15,7 +15,6 @@
       </Button>
 
     </div>
-    <p class="support-tip"><a href="javascript:;">靠我啦kaowola</a> 免费技术支持</p>
     <PhotoTip ></PhotoTip>
 
   </div>

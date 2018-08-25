@@ -63,9 +63,11 @@
     </div>
     <div v-if="menu === '1-3'" class="padding-10 bg-white margin-top-10 margin-right-10 box-shadow">
       <p class="part-title">背景图片</p>
-      <Uploader :url="url"
+
+      <Button v-if="formData.screenType === 3" disabled style="width: 200px">上传图片</Button>
+      <Uploader v-else :url="url"
                 :data="extraData"
-                :previewImage="backgroundImage"
+                :previewImage="formData.backgroundImage"
                 @on-change="uploadChanged"></Uploader>
 
       <p class="margin-top-20">请上传 2Mb 以内的图片，建议图片宽高比：竖屏9:16，横屏16:9</p>
@@ -77,7 +79,7 @@
             <div class="version">
               <p class="clear">
                 设置是否需要显示/隐藏头像模块
-                <i-switch v-model="avatarShow" size="large" class="fr" :disabled="!avatarStyleOpen && !beautyStyleOpen" >
+                <i-switch v-model="formData.avatarShow" size="large" class="fr" :disabled="!avatarStyleOpen && !beautyStyleOpen" >
                   <span slot="open">显示</span>
                   <span slot="close">隐藏</span>
                 </i-switch>
@@ -86,40 +88,40 @@
           </TabPane>
         </Tabs>
         <ul v-if="formData.screenType === 1" class="style h-style clear">
-          <li :class="{selected: styleId === 1}">
-            <div class="img" @click="styleId = 1">
+          <li :class="{selected: formData.styleId === 1}">
+            <div class="img" @click="formData.styleId = 1">
               <img src="@/assets/set/h-1.jpg" alt="">
             </div>
             <p>默认 <a @click="previewImg($event)">预览</a></p>
           </li>
-          <li :class="{selected: styleId === 2}">
-            <div class="img" @click="avatarStyleOpen ? styleId = 2 : null">
+          <li :class="{selected: formData.styleId === 2}">
+            <div class="img" @click="avatarStyleOpen ? formData.styleId = 2 : null">
               <img src="@/assets/set/h-2.jpg" alt="">
             </div>
             <p>头像姓名 <a @click="previewImg($event)">预览</a> <a v-if="!avatarStyleOpen" @click="openAvatarStyle">开通</a></p>
           </li>
-          <li :class="{selected: styleId === 3}">
-            <div class="img" @click="beautyStyleOpen ? styleId = 3 : null">
+          <li :class="{selected: formData.styleId === 3}">
+            <div class="img" @click="beautyStyleOpen ? formData.styleId = 3 : null">
               <img src="@/assets/set/h-3.jpg" alt="">
             </div>
             <p>头像颜值 <a @click="previewImg($event)">预览</a> <a v-if="!beautyStyleOpen" @click="openBeautyStyle">开通</a></p>
           </li>
         </ul>
         <ul v-if="formData.screenType === 2" class="style v-style clear">
-          <li  :class="{'selected': styleId === 1}">
-            <div class="img" @click="styleId = 1">
+          <li  :class="{'selected': formData.styleId === 1}">
+            <div class="img" @click="formData.styleId = 1">
               <img src="@/assets/set/v-1.jpg" alt="">
             </div>
             <p>默认 <a @click="previewImg($event)">预览</a></p>
           </li>
-          <li :class="{'selected': styleId === 2}">
-            <div class="img" @click="avatarStyleOpen ? styleId = 2 : null">
+          <li :class="{'selected': formData.styleId === 2}">
+            <div class="img" @click="avatarStyleOpen ? formData.styleId = 2 : null">
               <img src="@/assets/set/v-2.jpg" alt="">
             </div>
             <p>头像姓名 <a @click="previewImg($event)">预览</a> <a v-if="!avatarStyleOpen" @click="openAvatarStyle">开通</a></p>
           </li>
-          <li :class="{'selected': styleId === 3 }">
-            <div class="img" @click="beautyStyleOpen ? styleId = 3 : null">
+          <li :class="{'selected': formData.styleId === 3 }">
+            <div class="img" @click="beautyStyleOpen ? formData.styleId = 3 : null">
               <img src="@/assets/set/v-3.jpg" alt="">
             </div>
             <p>头像颜值 <a @click="previewImg($event)">预览</a> <a v-if="!beautyStyleOpen" @click="openBeautyStyle">开通</a></p>
@@ -137,7 +139,7 @@
       <div class="clear">
         <Button type="primary" class="fr submit"
                 :loading="submitLoading"
-                @click="backgroundSubmit">保存
+                @click="backgroundSubmit" :disabled="formData.screenType === 3">保存
         </Button>
       </div>
     </div>
@@ -177,7 +179,6 @@
         id: '',
         type: 'normal',
         url: apis.activity.uploadImage,
-        backgroundImage: '',
         extraData: [{
           key: 'id',
           value: 1
@@ -189,13 +190,17 @@
           endTime: '',
           screenType: 1, // horizontal-1 vertical-2 smallScreen-3
           contentType: 1, // terse-1 complex-2
-          avatarType: 1 // default-1 3D-2
+          avatarType: 1, // default-1 3D-2
+          backgroundImage: '',
+          avatarShow: false,//	 false代表不显示，true代表显示 -----接口值互换 1=显示头像模块0=不显示
+          styleId: 1, //主题风格ID，1=默认风格 2=头像风格 3=头像颜值风格
         },
+        dataBack:{
+        },
+        isSave:false,//是否保存修改
         status: 0,
         menu: "1-1",
         showVersion: true,
-        avatarShow: false,//	 false代表不显示，true代表显示 -----接口值互换 1=显示头像模块0=不显示
-        styleId: 1, //主题风格ID，1=默认风格 2=头像风格 3=头像颜值风格
         avatarStyleOpen: false,//false代表否，true头像风格已购买 -----"string,新增字段，1=头像风格已购买0=否",
         beautyStyleOpen: false,//false代表否，true代表颜值风格已购买 -----"string,新增字段，1=颜值风格已购买0=否"
         endDateLimit: {}
@@ -203,7 +208,7 @@
     },
     methods: {
       uploadChanged (info) {
-        if (info.type === 'success') this.backgroundImage = info.data.background
+        if (info.type === 'success') this.formData.backgroundImage = info.data.background
       },
 
       readFromLocal () {
@@ -227,14 +232,15 @@
             this.formData.screenType = data.screen_type
             this.formData.contentType = data.content_type
             this.formData.avatarType = data.avatar_type
-            this.backgroundImage = data.background
+            this.formData.backgroundImage = apis.baseUrl + data.background  //把前缀补齐
             this.showVersion = !!Number(data.version_show)
-            this.avatarShow = !!Number(data.avatar_show)
-            this.styleId = data.style_id
+            this.formData.avatarShow = !!Number(data.avatar_show)
+            this.formData.styleId = data.style_id
             this.avatarStyleOpen = !!Number(data.avatar_style_open)
             this.beautyStyleOpen = !!Number(data.beauty_style_open)
             this.status = data.status
-
+            this.dataBack = { ...this.formData }
+            console.log(this.dataBack )
             this.endDateLimit = {
               disabledDate (date) {
                 return date && date.valueOf() < new Date(data.start_time).getTime()
@@ -280,7 +286,7 @@
         //   this.$Message.error('活动结束时间不能早于或等于开始时间')
         //   return false
         // }
-        // if (!this.backgroundImage) {
+        // if (!this.formData.backgroundImage) {
         //   this.$Message.warning('请上传背景图片')
         //   return false
         // }
@@ -299,6 +305,7 @@
           end_time: util.dateFormat(this.formData.endTime)
         }).then(res => {
           this.$Message.success('修改成功')
+          this.isSave = true
           // this.$router.go(-1)
           // $bus.$emit('REDIRECT_PANNEL', this.type)
         }).catch(err => {
@@ -318,6 +325,7 @@
           content_type: this.formData.contentType
         }).then(res => {
           this.$Message.success('修改成功')
+          this.isSave = true
           // this.$router.go(-1)
           // $bus.$emit('REDIRECT_PANNEL', this.type)
         }).catch(err => {
@@ -336,6 +344,7 @@
           avatar_type: this.formData.onWallType
         }).then(res => {
           this.$Message.success('修改成功')
+          this.isSave = true
           // this.$router.go(-1)
           // $bus.$emit('REDIRECT_PANNEL', this.type)
         }).catch(err => {
@@ -351,11 +360,12 @@
         }, 500)
         ajax.auto(apis.activity.editBackground, {
           id: this.id,
-          background: this.backgroundImage,
-          avatar_show: this.avatarShow ? 1: 0,
-          style_id: this.styleId
+          background: this.formData.backgroundImage,
+          avatar_show: this.formData.avatarShow ? 1: 0,
+          style_id: this.formData.styleId
         }).then(res => {
           this.$Message.success('修改成功')
+          this.isSave = true
           // this.$router.go(-1)
           // $bus.$emit('REDIRECT_PANNEL', this.type)
         }).catch(err => {
@@ -380,9 +390,15 @@
       console.log(this)
     },
     beforeRouteUpdate (to, from, next) {
+      if(this.isSave === true){
+        this.dataBack = { ...this.formData}
+      }else{
+        this.formData = { ...this.dataBack}
+      }
       if (to.query.menuItem) {
         this.menu = to.query.menuItem
       }
+      this.isSave = false
       next()
     }
   }

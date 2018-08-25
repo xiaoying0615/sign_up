@@ -17,7 +17,7 @@
       <Input v-model="formData.secretKey" placeholder="请输入Secret Key" type="text"></Input>
     </Form-item>
   </Form>
-  <p>登录<a>百度AI开放平台</a>获取API Key和Secret Key。	<a>如何获取？</a></p>
+  <p>登录<a href="https://ai.baidu.com/">百度AI开放平台</a>获取API Key和Secret Key。	<a href="https://shimo.im/docs/3S37iQkpQ6Q66qrU/">如何获取？</a></p>
   <div slot="footer">
     <Button long
             type="primary"
