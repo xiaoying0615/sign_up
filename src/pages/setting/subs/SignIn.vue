@@ -341,7 +341,7 @@
         }, 500)
         ajax.auto(apis.activity.editAvatarType, {
           id: this.id,
-          avatar_type: this.formData.onWallType
+          avatar_type: this.formData.avatarType
         }).then(res => {
           this.$Message.success('修改成功')
           this.isSave = true
@@ -358,6 +358,12 @@
         setTimeout(() => {
           this.submitLoading = false
         }, 500)
+
+        let num = this.formData.backgroundImage.indexOf(apis.baseUrl);
+        if( num >= 0){
+            num += apis.baseUrl.length
+          this.formData.backgroundImage = this.formData.backgroundImage.substring(num,this.formData.backgroundImage.length)
+        }
         ajax.auto(apis.activity.editBackground, {
           id: this.id,
           background: this.formData.backgroundImage,

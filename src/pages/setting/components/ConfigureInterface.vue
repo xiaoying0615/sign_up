@@ -17,6 +17,7 @@
       <Input v-model="formData.secretKey" placeholder="请输入Secret Key" type="text"></Input>
     </Form-item>
   </Form>
+  <p class="font-red">注意：一经保存切勿随意更改Key，否则将会导致活动数据丢失。</p>
   <p>登录<a href="https://ai.baidu.com/">百度AI开放平台</a>获取API Key和Secret Key。	<a href="https://shimo.im/docs/3S37iQkpQ6Q66qrU/">如何获取？</a></p>
   <div slot="footer">
     <Button long
@@ -94,6 +95,11 @@ export default {
 <style scoped>
   p{
     font-size: 14px;
-    text-align: center;
+    padding-left: 20px;
+  }
+  .font-red{
+    font-size: 12px;
+    color: red;
+    margin:-10px 0 10px;
   }
 </style>

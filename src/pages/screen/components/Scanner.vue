@@ -76,7 +76,7 @@
           const data = res.data
           this.playAudio(res.status === 2 ? 'already' : 'success')
           this.isScroll = false
-          if(data.form){
+          if(data.form && data.form.findIndex(item => item.type === 4) >= 0){
             data.form.splice(data.form.findIndex(item => item.type === 4), 1)
           }
           this.user = {

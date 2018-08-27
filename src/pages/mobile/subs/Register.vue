@@ -1,12 +1,12 @@
 <template>
 <div ref="mobile" class="mobile layer" :style="data.background | backgroundRender">
   <div class="mobile-body">
-    
+
     <!-- 上传头像 -->
     <div class="text-align-center">
       <div class="camera-btn" :style="cameraRender" @click="upload">
         <Icon v-if="!avatar" type="camera"></Icon>
-        <img class="camera-preview" v-else :src="'http://www2.kaowola.com' + avatar">
+        <img class="camera-preview" v-else :src="baseUrl + avatar">
       </div>
       <p class="upload-tip margin-top-10" v-if="!this.data.background">请上传头像</p>
     </div>
@@ -40,14 +40,14 @@
 
       <Button type="ghost" class="mobile-btn submit margin-top-20"
               long :loading="loading" @click="submit">提交</Button>
-      
+
     </div>
   </div>
 
   <p class="support-tip" v-if="showVersion"><a href="javascript:;">靠我啦kaowola</a> 免费技术支持</p>
 
   <PhotoTip v-if="!isModel"></PhotoTip>
-  
+
   <div class="mobile" id="prevent-layer" v-if="isModel"></div>
 </div>
 </template>
@@ -93,7 +93,7 @@ export default {
       avatar: '', //'https://static.cxstore.top/images/avatar1.jpg',
       checkCode: '',
       leftTime: 0,
-
+      baseUrl:"",
       showVersion: true
     }
   },
@@ -119,7 +119,7 @@ export default {
       this.showVersion = !this.versionPaied
       if (this.isModel) {
         this.data = this.info
-        document.getElementById('prevent-layer').onclick = (e) => { 
+        document.getElementById('prevent-layer').onclick = (e) => {
           e.stopPropagation()
           e.preventDefault()
         }
@@ -248,6 +248,7 @@ export default {
   },
   mounted () {
     this.clientWidth = this.$refs.mobile.clientWidth
+    this.baseUrl = apis.baseUrl
     this.watchAvatar()
     this.init()
   }

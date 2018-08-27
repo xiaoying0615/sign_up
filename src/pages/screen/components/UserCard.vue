@@ -338,17 +338,20 @@
   }
 
   .card-avatar .card-content ul li {
+    position: relative;
     list-style: none;
     font-size: 24px;
-    padding: 10px 0;
+    padding: 10px 0 10px 25px;
   }
 
   .card-avatar .card-content ul li:before {
     content: '';
+    position: absolute;
+    top: calc(50% - 6px);
+    left: 0;
     display: inline-block;
     height: 12px;
     width: 12px;
-    margin-right: 10px;
     background-color: #d0a972;
   }
 

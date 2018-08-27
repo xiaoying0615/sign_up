@@ -66,6 +66,7 @@ export default {
       address: {
         signLink: '',
         faceLink: '',
+        signQuickLink:'',
         threedLink: ''
       }
     }
