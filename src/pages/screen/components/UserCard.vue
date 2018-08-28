@@ -1,6 +1,7 @@
 <template>
   <div class="user-card-box" :class="{small:scannerStyle === 'small' }">
-    <div v-if="styleId === 1">
+    <!--小屏时不判断主题，使用默认主题-->
+    <div v-if="scannerStyle === 'small'">
       <div v-if="!complex"
            class="user-card card-terse position-center bg-white"
            :style="raduisRender">
@@ -9,22 +10,68 @@
         <p class="card-terse-welcome margin-bottom-10">欢迎光临</p>
         <p class="red">颜值: {{data.score}}分</p>
       </div>
-
       <div ref="cardComplex"
            v-else
            class="user-card card-complex position-center bg-white clear"
            :style="raduisRender">
         <img class="card-complex-avatar fl" :src="data.avatar">
         <div class="card-complex-content" :style="fontRender">
+          <p>{{data.name}}</p>
           <p v-for="(item, key) in data.form" :key="key">{{item.value}}</p>
         </div>
       </div>
     </div>
-    <div v-if="styleId === 2">
-      <div class="card-avatar" :class="{vertical:scannerStyle.indexOf('Vertical') >= 0 ,horizontal:scannerStyle.indexOf('Horizontal') >= 0 }">
-        <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
-        <div class="card-content">
-          <div>
+    <div v-else>
+      <div v-if="styleId === 1">
+        <div v-if="!complex"
+             class="user-card card-terse position-center bg-white"
+             :style="raduisRender">
+          <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
+          <h1 class="card-terse-name text-over">{{data.name}}</h1>
+          <p class="card-terse-welcome margin-bottom-10">欢迎光临</p>
+          <p class="red">颜值: {{data.score}}分</p>
+        </div>
+
+        <div ref="cardComplex"
+             v-else
+             class="user-card card-complex position-center bg-white clear"
+             :style="raduisRender">
+          <img class="card-complex-avatar fl" :src="data.avatar">
+          <div class="card-complex-content" :style="fontRender">
+            <p>{{data.name}}</p>
+            <p v-for="(item, key) in data.form" :key="key">{{item.value}}</p>
+          </div>
+        </div>
+      </div>
+      <div v-if="styleId === 2">
+        <div class="card-avatar" :class="{vertical:scannerStyle.indexOf('Vertical') >= 0 ,horizontal:scannerStyle.indexOf('Horizontal') >= 0 }">
+          <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
+          <div class="card-content">
+            <div>
+              <h1 class="card-terse-name text-over">{{data.name}}
+                <Icon v-if="data.gender === 1" type="male"/>
+                <Icon v-else type="female"/>
+              </h1>
+              <div class="card-terse-welcome margin-bottom-10">
+                <p>欢迎光临</p>
+                <i class="welcome-corner corner-top-left"></i>
+                <i class="welcome-corner corner-top-right"></i>
+                <i class="welcome-corner corner-bottom-left"></i>
+                <i class="welcome-corner corner-bottom-right"></i>
+              </div>
+              <div class="line"></div>
+              <ul v-if="data.form !== []" :style="fontRender">
+                <li v-for="(item, key) in data.form" :key="key">{{item.name}}:{{item.value}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="styleId === 3">
+        <div class="card-beauty" :class="{horizontal:scannerStyle.indexOf('Horizontal') >= 0 }">
+          <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
+          <img src="@/assets/beauty_bg.png" alt="" class="stylebg">
+          <div class="card-content">
             <h1 class="card-terse-name text-over">{{data.name}}
               <Icon v-if="data.gender === 1" type="male"/>
               <Icon v-else type="female"/>
@@ -38,34 +85,11 @@
             </div>
             <div class="line"></div>
             <ul v-if="data.form !== []" :style="fontRender">
-              <li v-for="(item, key) in data.form" :key="key">{{item.name}}:{{item.value}}</li>
+              <li v-for="(item, key) in data.form" :key="key">{{item.value}}<br/>{{item.name}}</li>
             </ul>
           </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="styleId === 3">
-      <div class="card-beauty" :class="{horizontal:scannerStyle.indexOf('Horizontal') >= 0 }">
-        <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
-        <img src="@/assets/beauty_bg.png" alt="" class="stylebg">
-        <div class="card-content">
-          <h1 class="card-terse-name text-over">{{data.name}}
-            <Icon v-if="data.gender === 1" type="male"/>
-            <Icon v-else type="female"/>
-          </h1>
-          <div class="card-terse-welcome margin-bottom-10">
-            <p>欢迎光临</p>
-            <i class="welcome-corner corner-top-left"></i>
-            <i class="welcome-corner corner-top-right"></i>
-            <i class="welcome-corner corner-bottom-left"></i>
-            <i class="welcome-corner corner-bottom-right"></i>
-          </div>
-          <div class="line"></div>
-          <ul v-if="data.form !== []" :style="fontRender">
-            <li v-for="(item, key) in data.form" :key="key">{{item.value}}<br/>{{item.name}}</li>
-          </ul>
-        </div>
 
+        </div>
       </div>
     </div>
 
@@ -134,9 +158,6 @@
     top: 0;
     font-size: 14px;
     z-index: 11;
-  }
-  .user-card-box.small {
-    background-color: #000;
   }
 
   .user-card {
