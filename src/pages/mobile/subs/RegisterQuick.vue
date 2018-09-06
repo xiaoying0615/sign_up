@@ -15,7 +15,7 @@
       </Button>
 
     </div>
-    <PhotoTip ></PhotoTip>
+    <PhotoTip :uploadImgUrl="uploadImgUrl"></PhotoTip>
 
   </div>
 </template>
@@ -36,7 +36,7 @@
       return {
         clientWidth: 0,
         loading: false,
-
+        uploadImgUrl:apis.mobile.quickAvatar,
         data: {
           background: ''
         },

@@ -5,7 +5,7 @@
   <img src="@/assets/img-upload-tip.jpg">
 
   <ImageUpload slot="footer"
-               :url="url"
+               :url="uploadImgUrl"
                :crop="true"
                :maxWidth="640"
                :params="extraData"
@@ -25,11 +25,17 @@ import ImageUpload from '@/components/imageUpload/ImageUpload'
 export default {
   name: 'PhotoTip',
   components: { ImageUpload },
+  props: {
+    uploadImgUrl: {
+      type: String,
+      default: () =>{
+          return apis.mobile.avatar
+      }
+    }
+  },
   data () {
     return {
       show: false,
-
-      url: apis.mobile.avatar,
       maxSize: 2,
       progress: 0,
       extraData: [{

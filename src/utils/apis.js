@@ -67,7 +67,9 @@ export default {
     // 获取报名信息
     signInfo: baseURL + 'index/base/signInfo',
     // 快捷报名
-    quickClock: baseURL + '/index/base/quickClock'
+    quickClock: baseURL + '/index/base/quickClock',
+    // 快捷报名 - 上传头像
+    quickAvatar: baseURL + 'index/base/quickAvatar'
   },
 
   screen: {

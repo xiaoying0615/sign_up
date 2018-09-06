@@ -6,6 +6,13 @@
         <SignInList type="signed" :nickname="searchName" @on-select="tableSelected"></SignInList>
       </Tab-pane>
       <Tab-pane name="unsigned" label="未签到" icon="close-round">
+        <div style="margin-bottom: 15px;">
+          <!--<Button type="info"-->
+                  <!--@click="fetchData">手动添加</Button>-->
+          <!--<Button type="info"-->
+                  <!--@click="fetchData">批量导入</Button>-->
+          <!--<span>（批量导入前请先 <a href="#">下载模板</a>，并按照模板格式填写信息，模板内容请前往“表单设计”进行添加表单信息）</span>-->
+        </div>
         <SignInList type="unsigned" :nickname="searchName" @on-select="tableSelected"></SignInList>
       </Tab-pane>
     </Tabs>
@@ -27,10 +34,10 @@
               :disabled="signInButtonDisabled"
               :loading="signInButtonLoading"
               @click="batchSignIn">批量补签</Button>
-      <Button class="red-button margin-bottom-10"
-              type="ghost" icon="trash-b" long
-              :loading="deleteButtonLoading"
-              @click="batchDelete">批量删除</Button>
+      <!--<Button class="red-button margin-bottom-10" -->
+              <!--type="ghost" icon="trash-b" long-->
+              <!--:loading="deleteButtonLoading"-->
+              <!--@click="batchDelete">批量删除</Button>-->
       <Button class="blue-button margin-bottom-10" type="ghost" icon="android-download"
               :loading="exportButtonLoading" long
               @click="exportRecords">导出数据</Button>
@@ -91,6 +98,7 @@
           signedSelection = info.selection
         } else {
           unsignedSelection = info.selection
+          console.log(info)
         }
       },
 
@@ -129,45 +137,45 @@
       })
       },
 
-      // 批量删除校验
-      batchDelete () {
-        if (onTab === 'signed') {
-          if (!signedSelection.length) {
-            this.$Message.warning('请先选择需要删除的人员')
-            return
-          }
-          this.confirm('是否确定删除？')
-            .then(() => {
-            this.doBatchDelete(signedSelection)
-        })
-
-        } else {
-          if (!unsignedSelection.length) {
-            this.$Message.warning('请先选择需要删除的人员')
-            return
-          }
-          this.confirm('是否确定删除？')
-            .then(() => {
-            this.doBatchDelete(unsignedSelection)
-        })
-
-        }
-      },
-
-      doBatchDelete (deleteArray) {
-        this.deleteButtonLoading = true
-        ajax.auto(apis.records.delete, {
-          id: this.$route.params.activityId,
-          sign_ids: deleteArray.join(',')
-        }).then(res => {
-          this.deleteButtonLoading = false
-        this.$Message.success('删除成功')
-        $bus.$emit('SIGNIN_LIST_RELOAD', onTab)
-      }).catch(err => {
-          this.deleteButtonLoading = false
-        this.$Message.error(err)
-      })
-      },
+//      // 批量删除校验
+//      batchDelete () {
+//        if (onTab === 'signed') {
+//          if (!signedSelection.length) {
+//            this.$Message.warning('请先选择需要删除的人员')
+//            return
+//          }
+//          this.confirm('是否确定删除？')
+//            .then(() => {
+//            this.doBatchDelete(signedSelection)
+//        })
+//
+//        } else {
+//          if (!unsignedSelection.length) {
+//            this.$Message.warning('请先选择需要删除的人员')
+//            return
+//          }
+//          this.confirm('是否确定删除？')
+//            .then(() => {
+//            this.doBatchDelete(unsignedSelection)
+//        })
+//
+//        }
+//      },
+//
+//      doBatchDelete (deleteArray) {
+//        this.deleteButtonLoading = true
+//        ajax.auto(apis.records.delete, {
+//          id: this.$route.params.activityId,
+//          sign_ids: deleteArray.join(',')
+//        }).then(res => {
+//          this.deleteButtonLoading = false
+//        this.$Message.success('删除成功')
+//        $bus.$emit('SIGNIN_LIST_RELOAD', onTab)
+//      }).catch(err => {
+//          this.deleteButtonLoading = false
+//        this.$Message.error(err)
+//      })
+//      },
 
       // 导出数据
       exportRecords () {

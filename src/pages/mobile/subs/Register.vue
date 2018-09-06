@@ -46,9 +46,9 @@
 
   <p class="support-tip" v-if="showVersion"><a href="javascript:;">靠我啦kaowola</a> 免费技术支持</p>
 
-  <PhotoTip v-if="!isModel"></PhotoTip>
+  <PhotoTip v-if="!isModel" ></PhotoTip>
 
-  <div class="mobile" id="prevent-layer" v-if="isModel"></div>
+  <div class="mobile" id="prevent-layer" v-if="isModel" ></div>
 </div>
 </template>
 
@@ -85,7 +85,7 @@ export default {
     return {
       clientWidth: 0,
       loading: false,
-
+      uploadImgUrl:apis.mobile.avatar,
       data: {
         background: '',
         form: []
