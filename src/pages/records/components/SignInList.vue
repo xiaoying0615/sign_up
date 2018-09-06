@@ -1,8 +1,7 @@
 <template>
   <div>
     <Table :columns="header" :data="data"
-           @on-selection-change="selectChanged"
-           @on-row-click='rowClick'></Table>
+           @on-selection-change="selectChanged"></Table>
     <Button class="blue-button margin-top-10" type="ghost" long
             :loading="loading" :disabled="disabled"
             @click="fetchData">{{loadingTip}}
@@ -30,7 +29,6 @@
         loading: false,
 
         header: [],
-        clickId:"",
         data: []
       }
     },
@@ -98,7 +96,7 @@
               return h('div', [
                   h('Button', {
                     props: {
-                      type: 'text',
+                      type: 'error',
                       size: 'small',
                     },
                     on: {
@@ -106,7 +104,7 @@
                         this.$Modal.confirm({
                           title: '是否确定删除？',
                           onOk: () => {
-                            this.deleteSignInfo()
+                            this.deleteSignInfo(params.index)
                           }
                         })
                       }
@@ -161,7 +159,31 @@
               )
               )
             }
-          }]
+          },{
+          type:'action',
+          title: '操作',
+          align: 'center',
+          render: (h, params) => {
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small',
+                },
+                on: {
+                  click: () => {
+                    this.$Modal.confirm({
+                      title: '是否确定删除？',
+                      onOk: () => {
+                        this.deleteSignInfo(params.index)
+                      }
+                    })
+                  }
+                },
+              }, '删除')
+            ]);
+          }
+        }]
         this.header = this.type === 'signed' ? signedHeader : unsignedHeader
       },
 
@@ -211,16 +233,12 @@
       })
       },
 
-      rowClick(data) {
-        this.clickId = data.id
-      },
-      deleteSignInfo (){
+      deleteSignInfo (index){
         ajax.auto(apis.records.delete, {
           id: this.$route.params.activityId,
-          sign_ids: this.clickId
+          sign_ids: this.data[index].id
         }).then(res => {
           this.$Message.success('删除成功')
-          this.type = "signed"
           this.page = 1
           this.fetchData()
         })
