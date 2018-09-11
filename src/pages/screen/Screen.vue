@@ -80,7 +80,6 @@
     },
     created () {
       this.initScreen()
-
     }
   }
 </script>

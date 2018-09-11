@@ -69,7 +69,6 @@
       }
   },
     created () {
-        this.styleId = this.info.styleId
     }
   }
 </script>
