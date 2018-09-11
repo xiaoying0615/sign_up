@@ -48,7 +48,8 @@
           <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
           <div class="card-content">
             <div>
-              <h1 class="card-terse-name text-over">{{data.name}}
+              <h1 class="card-terse-name text-over">
+                <span class="text-over">{{data.name}}</span>
                 <Icon v-if="data.gender === 1" type="male"/>
                 <Icon v-else type="female"/>
               </h1>
@@ -72,7 +73,8 @@
           <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
           <img src="@/assets/beauty_bg.png" alt="" class="stylebg">
           <div class="card-content">
-            <h1 class="card-terse-name text-over">{{data.name}}
+            <h1 class="card-terse-name">
+              <span class="text-over">{{data.name}}</span>
               <Icon v-if="data.gender === 1" type="male"/>
               <Icon v-else type="female"/>
             </h1>
@@ -145,6 +147,7 @@
       }
     },
     created (){
+        this.styleId = 3
     }
   }
 </script>
@@ -180,6 +183,11 @@
 
   .card-terse-name {
     font-size: 26px;
+  }
+  .card-terse-name span{
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 70%;
   }
 
   .card-terse-name i {
