@@ -147,7 +147,6 @@
       }
     },
     created (){
-        this.styleId = 3
     }
   }
 </script>
@@ -187,7 +186,7 @@
   .card-terse-name span{
     display: inline-block;
     vertical-align: middle;
-    max-width: 70%;
+    max-width: calc( 100% - 80px );
   }
 
   .card-terse-name i {
