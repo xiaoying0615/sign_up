@@ -232,7 +232,7 @@
             this.formData.screenType = data.screen_type
             this.formData.contentType = data.content_type
             this.formData.avatarType = data.avatar_type
-            this.formData.backgroundImage = apis.baseUrl + data.background  //把前缀补齐
+            this.formData.backgroundImage = data.background === null ? null : apis.baseUrl + data.background  //把前缀补齐
             this.showVersion = !!Number(data.version_show)
             this.formData.avatarShow = !!Number(data.avatar_show)
             this.formData.styleId = data.style_id

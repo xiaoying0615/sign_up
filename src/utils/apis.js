@@ -1,5 +1,5 @@
-const baseURL = 'http://face.kaowola.com/'
-// const baseURL = 'https://www2.kaowola.com/'
+// const baseURL = 'http://face.kaowola.com/'
+const baseURL = 'https://www2.kaowola.com/'
 
 export default {
   baseUrl:baseURL,
