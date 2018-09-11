@@ -77,7 +77,7 @@
               <Icon v-else type="female"/>
             </h1>
             <div class="card-terse-welcome margin-bottom-10">
-              <p>欢迎光临</p>
+              <p>颜值：{{data.score}}</p>
               <i class="welcome-corner corner-top-left"></i>
               <i class="welcome-corner corner-top-right"></i>
               <i class="welcome-corner corner-bottom-left"></i>
