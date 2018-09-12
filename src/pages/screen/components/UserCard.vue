@@ -61,7 +61,7 @@
                 <i class="welcome-corner corner-bottom-right"></i>
               </div>
               <div class="line"></div>
-              <ul v-if="data.form !== []" :style="fontRender">
+              <ul v-if="data.form !== []">
                 <li v-for="(item, key) in data.form" :key="key">{{item.name}}:{{item.value}}</li>
               </ul>
             </div>
@@ -86,7 +86,7 @@
               <i class="welcome-corner corner-bottom-right"></i>
             </div>
             <div class="line"></div>
-            <ul v-if="data.form !== []" :style="fontRender">
+            <ul v-if="data.form !== []">
               <li v-for="(item, key) in data.form" :key="key">{{item.value}}<br/>{{item.name}}</li>
             </ul>
           </div>
@@ -142,8 +142,8 @@
     },
     mounted () {
       if (this.$refs.cardComplex &&
-        this.$refs.cardComplex.clientHeight / 12 > this.baseFontSize) {
-        this.baseFontSize = this.$refs.cardComplex.clientHeight / 12
+        this.$refs.cardComplex.clientWidth / 24 > this.baseFontSize) {
+        this.baseFontSize = this.$refs.cardComplex.clientWidth / 24
       }
     },
     created (){

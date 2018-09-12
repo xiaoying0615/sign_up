@@ -359,7 +359,7 @@
           this.submitLoading = false
         }, 500)
 
-        let num = data.background === null ? -1 : this.formData.backgroundImage.indexOf(apis.baseUrl);
+        let num = this.formData.backgroundImage === null ? -1 : this.formData.backgroundImage.indexOf(apis.baseUrl);
         if( num >= 0){
             num += apis.baseUrl.length
           this.formData.backgroundImage = this.formData.backgroundImage.substring(num,this.formData.backgroundImage.length)
