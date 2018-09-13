@@ -12,12 +12,19 @@
     </div>
 
     <UserCard v-if="user" v-model="user" :complex="complex" :styleId="styleId" :scannerStyle="scannerStyle" ></UserCard>
+
+    <audio :src="audioSuccess" id="audio-success" preload="load"></audio>
+    <audio :src="audioAlready" id="audio-already" preload="load"></audio>
   </div>
 </template>
 
 <script>
   import Video2Image from '@/components/Video2Image'
   import UserCard from './UserCard'
+
+
+  import audioSuccess from '@/assets/success.wav'
+  import audioAlready from '@/assets/already.wav'
 
   let interval
   let timeout
@@ -33,7 +40,8 @@
       return {
         $audioSuccess: null,
         $audioAlready: null,
-
+        audioSuccess,
+        audioAlready,
         complex: false,
         styleId:1,
         user: null,

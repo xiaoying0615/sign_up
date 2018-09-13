@@ -1,7 +1,5 @@
 <template>
   <div class="screen" :style="backgroundRender">
-    <audio :src="audioSuccess" id="audio-success" preload="load"></audio>
-    <audio :src="audioAlready" id="audio-already" preload="load"></audio>
     <router-view :info = "info"></router-view>
 
     <p class="support-tip" v-if="versionShow"><a href="javascript:;">靠我啦kaowola</a> 免费技术支持</p>
@@ -12,17 +10,12 @@
   import defaultHBackground from '@/assets/bg-screen-h.jpg'
   import defaultVBackground from '@/assets/bg-screen-v.jpg'
 
-  import audioSuccess from '@/assets/success.wav'
-  import audioAlready from '@/assets/already.wav'
-
   export default {
     name: 'Screen',
     data () {
       return {
         background: '',
         backgroundColor: '',
-        audioSuccess,
-        audioAlready,
         versionShow: true,
         info: {
           styleId: 1,
@@ -65,7 +58,7 @@
             this.background = data.background
             this.versionShow = Number(data.version_show) === 1 ? true : false
             this.info.styleId = data.style_id
-            this.info.avatarShow = data.avatar_show
+            this.info.avatarShow = Number(data.avatar_show) === 1 ? true : false
             this.info.female = data.female_list
             this.info.male = data.male_list
             this.info.sign = data.sign_list

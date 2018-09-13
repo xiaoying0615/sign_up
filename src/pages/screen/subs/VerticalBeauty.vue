@@ -72,7 +72,7 @@
       getBeautyInfo(beautyInfo){
         this.info.male = beautyInfo.male
         this.info.female = beautyInfo.female
-          this.info.signNum = beautyInfo.num
+        this.info.signNum = beautyInfo.num
       }
     },
     created () {

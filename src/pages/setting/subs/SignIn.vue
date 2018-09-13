@@ -232,7 +232,11 @@
             this.formData.screenType = data.screen_type
             this.formData.contentType = data.content_type
             this.formData.avatarType = data.avatar_type
-            this.formData.backgroundImage = data.background === null ? null : apis.baseUrl + data.background  //把前缀补齐
+            if(data.background !== "" && data.background !== null){
+              this.formData.backgroundImage = apis.baseUrl + data.background  //把前缀补齐
+            }else{
+              this.formData.backgroundImage = ""
+            }
             this.showVersion = !!Number(data.version_show)
             this.formData.avatarShow = !!Number(data.avatar_show)
             this.formData.styleId = data.style_id
@@ -240,7 +244,6 @@
             this.beautyStyleOpen = !!Number(data.beauty_style_open)
             this.status = data.status
             this.dataBack = { ...this.formData }
-            console.log(this.dataBack )
             this.endDateLimit = {
               disabledDate (date) {
                 return date && date.valueOf() < new Date(data.start_time).getTime()
@@ -359,7 +362,7 @@
           this.submitLoading = false
         }, 500)
 
-        let num = this.formData.backgroundImage === null ? -1 : this.formData.backgroundImage.indexOf(apis.baseUrl);
+        let num = this.formData.backgroundImage.indexOf(apis.baseUrl);
         if( num >= 0){
             num += apis.baseUrl.length
           this.formData.backgroundImage = this.formData.backgroundImage.substring(num,this.formData.backgroundImage.length)
