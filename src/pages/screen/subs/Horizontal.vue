@@ -2,7 +2,7 @@
   <div>
     <div ref="scannerBox" class="scanner-box">
       <div class="scanner-body" :style="scannerRender">
-        <Scanner :scannerStyle = "scannerStyle"></Scanner>
+        <Scanner :scannerStyle = "scannerStyle" :complex="complex"></Scanner>
       </div>
     </div>
 
@@ -15,6 +15,12 @@
   export default {
     name: 'Horizontal',
     components: { Scanner},
+    props:{
+      complex: {
+        type: Boolean,
+        default: true
+      }
+    },
     data () {
       return {
         scannerBoxWidth: 0,

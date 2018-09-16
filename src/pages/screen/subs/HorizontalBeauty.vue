@@ -10,7 +10,7 @@
     </div>
     <div ref="scannerBox" class="scanner-box">
       <div class="scanner-body" :style="scannerRender">
-        <Scanner :scannerStyle = "scannerStyle" @getBeautyInfo="getBeautyInfo"></Scanner>
+        <Scanner :scannerStyle = "scannerStyle" @getBeautyInfo="getBeautyInfo" :styleId = 'styleId'></Scanner>
       </div>
     </div>
     <span v-if="info.avatarShow" class="beauty-list-num"><i></i>{{info.signNum}}人 </span>
@@ -36,6 +36,10 @@
       info: {
         type: Object,
         required: true
+      },
+      styleId:{
+        type:Number,
+        required:true
       }
     },
     data () {

@@ -1,6 +1,6 @@
 <template>
   <div class="screen" :style="backgroundRender">
-    <router-view :info = "info"></router-view>
+    <router-view :info = "info" :styleId="styleId" :complex="complex"></router-view>
 
     <p class="support-tip" v-if="versionShow"><a href="javascript:;">靠我啦kaowola</a> 免费技术支持</p>
   </div>
@@ -17,8 +17,9 @@
         background: '',
         backgroundColor: '',
         versionShow: true,
+        complex:true,
+        styleId:1,
         info: {
-          styleId: 1,
           avatarShow: true,
           female: [],
           male: [],
@@ -57,14 +58,15 @@
             document.title = data.name
             this.background = data.background
             this.versionShow = Number(data.version_show) === 1 ? true : false
-            this.info.styleId = data.style_id
+            this.styleId = data.style_id
+            this.complex = Number(data.content_type) === 1 ? true : false
             this.info.avatarShow = Number(data.avatar_show) === 1 ? true : false
             this.info.female = data.female_list
             this.info.male = data.male_list
             this.info.sign = data.sign_list
             this.info.signNum = data.sign_num
-            $bus.$emit('SCREEN_CONTENT_COMPLEX', Number(data.content_type) === 1 ? false : true)
-            $bus.$emit('SCREEN_CONTENT_STYLE', data.style_id)
+//            $bus.$emit('SCREEN_CONTENT_COMPLEX', Number(data.content_type) === 1 ? false : true)
+//            $bus.$emit('SCREEN_CONTENT_STYLE', data.style_id)
           })
           .catch(err => {
             this.$Message.error(err)

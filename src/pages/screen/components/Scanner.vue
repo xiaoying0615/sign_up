@@ -13,8 +13,8 @@
 
     <UserCard v-if="user" v-model="user" :complex="complex" :styleId="styleId" :scannerStyle="scannerStyle" ></UserCard>
 
-    <audio :src="audioSuccess" id="audio-success" preload="load"></audio>
-    <audio :src="audioAlready" id="audio-already" preload="load"></audio>
+    <audio :src="audioSuccess" id="audio-success" preload="load" muted ></audio>
+    <audio :src="audioAlready" id="audio-already" preload="load" muted ></audio>
   </div>
 </template>
 
@@ -35,15 +35,25 @@
   export default {
     name: 'Scanner',
     components: {Video2Image, UserCard},
-    props: ['scannerStyle'],
+    props: {
+      scannerStyle: {
+        type: String
+      },
+      styleId:{
+        type:Number,
+        default:1,
+      },
+      complex: {
+        type: Boolean,
+        default: true
+      }
+    },
     data () {
       return {
         $audioSuccess: null,
         $audioAlready: null,
         audioSuccess,
         audioAlready,
-        complex: false,
-        styleId:1,
         user: null,
         isScroll: true
       }
@@ -130,12 +140,6 @@
     },
 
     created () {
-      $bus.$on('SCREEN_CONTENT_COMPLEX', complex => {
-        this.complex = complex
-      })
-      $bus.$on('SCREEN_CONTENT_STYLE', styleId => {
-        this.styleId = styleId
-      })
     },
     destroyed () {
       clearInterval(interval)

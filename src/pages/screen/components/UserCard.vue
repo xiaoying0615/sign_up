@@ -2,7 +2,7 @@
   <div class="user-card-box" :class="{small:scannerStyle === 'small' }">
     <!--小屏时不判断主题，使用默认主题-->
     <div v-if="scannerStyle === 'small'">
-      <div v-if="!complex"
+      <div v-if="complex"
            class="user-card card-terse position-center bg-white"
            :style="raduisRender">
         <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
@@ -23,7 +23,7 @@
     </div>
     <div v-else>
       <div v-if="styleId === 1">
-        <div v-if="!complex"
+        <div v-if="complex"
              class="user-card card-terse position-center bg-white"
              :style="raduisRender">
           <img class="card-terse-avatar margin-bottom-20" :src="data.avatar">
@@ -109,7 +109,7 @@
     props: {
       complex: {
         type: Boolean,
-        default: false
+        default: true
       },
       styleId: {
         type: Number,

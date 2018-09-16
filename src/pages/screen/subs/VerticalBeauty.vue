@@ -2,7 +2,7 @@
   <div>
     <div ref="scannerBox" class="scanner-box">
       <div class="scanner-body" :style="scannerRender">
-        <Scanner :scannerStyle = "scannerStyle" @getBeautyInfo="getBeautyInfo"></Scanner>
+        <Scanner :scannerStyle = "scannerStyle" @getBeautyInfo="getBeautyInfo" :styleId = 'styleId'></Scanner>
       </div>
     </div>
     <div v-if="info.avatarShow" class="avatar-list">
@@ -35,6 +35,10 @@
       info: {
         type: Object,
         required: true
+      },
+      styleId:{
+        type:Number,
+        required:true
       }
     },
     data () {
