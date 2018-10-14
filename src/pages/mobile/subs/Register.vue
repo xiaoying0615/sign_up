@@ -1,55 +1,64 @@
 <template>
-<div ref="mobile" class="mobile layer" :style="data.background | backgroundRender">
-  <div class="mobile-body">
-
-    <!-- 上传头像 -->
-    <div class="text-align-center">
-      <div class="camera-btn" :style="cameraRender" @click="upload">
-        <Icon v-if="!avatar" type="camera"></Icon>
-        <img class="camera-preview" v-else :src="baseUrl + avatar">
+    <div  ref="mobile" class="mobile layer" :style="data.background | backgroundRender">
+      <div v-if="pageLoading">
+        <Spin fix style="background: #fff;">
+          <Icon type="load-c" size=60 class="spin-icon-load"></Icon>
+          <div>数据加载中</div>
+        </Spin>
       </div>
-      <p class="upload-tip margin-top-10" v-if="!this.data.background">请上传头像</p>
-    </div>
+      <div v-else>
+        <div class="mobile-body">
 
-    <div class="form" :style="{ width: clientWidth * 0.7 + 'px' }">
+          <!-- 上传头像 -->
+          <div class="text-align-center">
+            <div class="camera-btn" :style="cameraRender" @click="upload">
+              <Icon v-if="!avatar" type="camera"></Icon>
+              <img class="camera-preview" v-else :src="baseUrl + avatar">
+            </div>
+            <p class="upload-tip margin-top-10" v-if="!this.data.background">请上传头像</p>
+          </div>
 
-      <template v-for="item in data.form">
-        <div class="form-item">
-          <input type="tel" :placeholder="item.placeholder" v-model="item.value" v-if="item.type === 'telephone'">
-          <input type="email" :placeholder="item.placeholder" v-model="item.value" v-if="item.type === 'email'">
-          <input type="number" :placeholder="item.placeholder" v-model="item.value" v-if="item.type === 'number'">
-          <input type="text" :placeholder="item.placeholder" v-model="item.value" v-if="item.type === 'text'">
-          <template v-if="item.type === 'select'">
-            <select v-model="item.value">
-              <option value="unselectedOption">{{item.placeholder}}</option>
-              <option :value="option.value" v-for="option in item.options">{{option.value}}</option>
-            </select>
-            <Icon type="chevron-down" size="16" class="select-icon"></Icon>
-          </template>
-        </div>
+          <div class="form" :style="{ width: clientWidth * 0.7 + 'px' }">
 
-        <!-- <div class="clear" v-if="item.needValid"> -->
-        <div class="clear" v-if="item.type === 'telephone'">
-          <Button type="ghost" class="mobile-btn code-sender fr"
-                  @click="getSMSCode(item.value)">{{leftTime === 0 ? '获取验证码' : leftTime + ' 秒'}}</Button>
-          <div class="form-item telephone-code">
-            <input type="number" placeholder="验证码" v-model="checkCode">
+            <template v-for="item in data.form">
+              <div class="form-item">
+                <input type="tel" :placeholder="item.placeholder" v-model="item.value" v-if="item.type === 'telephone'">
+                <input type="email" :placeholder="item.placeholder" v-model="item.value" v-if="item.type === 'email'">
+                <input type="number" :placeholder="item.placeholder" v-model="item.value" v-if="item.type === 'number'">
+                <input type="text" :placeholder="item.placeholder" v-model="item.value" v-if="item.type === 'text'">
+                <template v-if="item.type === 'select'">
+                  <select v-model="item.value">
+                    <option value="unselectedOption">{{item.placeholder}}</option>
+                    <option :value="option.value" v-for="option in item.options">{{option.value}}</option>
+                  </select>
+                  <Icon type="chevron-down" size="16" class="select-icon"></Icon>
+                </template>
+              </div>
+
+              <!-- <div class="clear" v-if="item.needValid"> -->
+              <div class="clear" v-if="item.type === 'telephone'">
+                <Button type="ghost" class="mobile-btn code-sender fr"
+                        @click="getSMSCode(item.value)">{{leftTime === 0 ? '获取验证码' : leftTime + ' 秒'}}</Button>
+                <div class="form-item telephone-code">
+                  <input type="number" placeholder="验证码" v-model="checkCode">
+                </div>
+              </div>
+            </template>
+
+            <Button type="ghost" class="mobile-btn submit margin-top-20"
+                    long :loading="loading" @click="submit">提交</Button>
+
           </div>
         </div>
-      </template>
 
-      <Button type="ghost" class="mobile-btn submit margin-top-20"
-              long :loading="loading" @click="submit">提交</Button>
+        <p class="support-tip" v-if="showVersion"><a href="javascript:;">靠我啦kaowola</a> 免费技术支持</p>
+
+        <PhotoTip v-if="!isModel" ></PhotoTip>
+
+        <div class="mobile" id="prevent-layer" v-if="isModel" ></div>
+      </div>
 
     </div>
-  </div>
-
-  <p class="support-tip" v-if="showVersion"><a href="javascript:;">靠我啦kaowola</a> 免费技术支持</p>
-
-  <PhotoTip v-if="!isModel" ></PhotoTip>
-
-  <div class="mobile" id="prevent-layer" v-if="isModel" ></div>
-</div>
 </template>
 
 <script>
@@ -94,7 +103,8 @@ export default {
       checkCode: '',
       leftTime: 0,
       baseUrl:"",
-      showVersion: true
+      showVersion: true,
+      pageLoading:true
     }
   },
   computed: {
@@ -172,22 +182,27 @@ export default {
           .then(res => {
             const data = res.data
             // 未登录
-            if (!Number(data.is_login)) window.location.href = data.url
-            // 未报名
-            else if (!Number(data.is_clock)) {
-              document.title = data.name
-              this.showVersion = !!Number(data.version_show)
-              this.data.background = data.sign_background
-              this.data.form = util.registerDataFormat(data.form)
+            if (!Number(data.is_login)) {
+              window.location.href = data.url
             }
-            // 已报名
-            else {
-              this.$router.replace({
-                name: 'mobileResponse',
-                query: {
-                  id: data.sign_id
-                }
-              })
+            else{
+              this.pageLoading = false
+              // 未报名
+              if (!Number(data.is_clock)) {
+                document.title = data.name
+                this.showVersion = !!Number(data.version_show)
+                this.data.background = data.sign_background
+                this.data.form = util.registerDataFormat(data.form)
+              }
+              // 已报名
+              else {
+                this.$router.replace({
+                  name: 'mobileResponse',
+                  query: {
+                    id: data.sign_id
+                  }
+                })
+              }
             }
           }).catch(err => {
             this.$Message.error(err)
@@ -247,6 +262,7 @@ export default {
     }
   },
   mounted () {
+    document.title = ""
     this.clientWidth = this.$refs.mobile.clientWidth
     this.baseUrl = apis.baseUrl
     this.watchAvatar()
@@ -256,5 +272,15 @@ export default {
 </script>
 
 <style scoped>
-@import url('../mobile.css')
+@import url('../mobile.css');
+.spin-icon-load{
+  margin-bottom: 15px;
+  animation: ani-demo-spin 1s linear infinite;
+}
+@keyframes ani-demo-spin {
+  from { transform: rotate(0deg);}
+  50%  { transform: rotate(180deg);}
+  to   { transform: rotate(360deg);}
+}
+
 </style>
