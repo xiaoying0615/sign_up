@@ -1,6 +1,6 @@
 <template>
     <div  ref="mobile" class="mobile layer" :style="data.background | backgroundRender">
-      <div v-if="pageLoading">
+      <div v-if="pageLoading && !isModel">
         <Spin fix style="background: #fff;">
           <Icon type="load-c" size=60 class="spin-icon-load"></Icon>
           <div>数据加载中</div>
@@ -119,7 +119,7 @@ export default {
   filters: {
     backgroundRender (background) {
       return {
-        background: `url(${background ? background : defaultBackground}) center center / cover no-repeat`
+        background: `url(${background ? background.indexOf(apis.baseUrl) >= 0 ? background : apis.baseUrl + background : defaultBackground}) center center / cover no-repeat`
       }
     }
   },
