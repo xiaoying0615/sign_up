@@ -36,18 +36,27 @@
     <!-- 延长天数 -->
     <div class="table margin-bottom-10" v-if="type === 'delay'">
       <Row class="table-header">
-        <Col span="8" class="table-header-item table-item bolder">活动生效时间</Col>
-        <Col span="8" class="table-header-item table-item bolder">延长时间（天）</Col>
-        <Col span="8" class="table-header-item table-item bolder">升级费用（元）</Col>
+        <Col span="12" class="table-header-item table-item bolder">活动生效时间</Col>
+        <Col span="6" class="table-header-item table-item bolder">延长时间（天）</Col>
+        <Col span="6" class="table-header-item table-item bolder">升级费用（元）</Col>
       </Row>
       <Row class="table-content">
-        <Col span="8" class="table-item">
-          {{endTime.split(' ')[0]}}
-          <i class="text-indent"></i>-<i class="text-indent"></i>
-          <Date-picker v-model="delayTime" type="date" :clearable="false" :options="endDateLimit"></Date-picker>
+        <Col span="12" class="table-item">
+        <Row>
+          <Col span="6">
+            <span>{{endTime.split(' ')[0]}}</span>
+          </Col>
+          <Col span="4">
+            <i class="text-indent"></i>-<i class="text-indent"></i>
+          </Col>
+          <Col span="14">
+            <Date-picker v-model="delayTime" type="date" :clearable="false" :options="endDateLimit"></Date-picker>
+          </Col>
+        </Row>
+
         </Col>
-        <Col span="8" class="table-item">{{delayDays}}</Col>
-        <Col span="8" class="table-item">{{299 * delayDays}}</Col>
+        <Col span="6" class="table-item">{{delayDays}}</Col>
+        <Col span="6" class="table-item">{{99 * delayDays}}</Col>
       </Row>
     </div>
 
@@ -160,9 +169,11 @@ export default {
     },
     // 延长天数
     delayDays () {
-      console.log(this.delayTime, this.endTime)
-      console.log(new Date(this.delayTime), new Date(this.endTime))
-      return ((new Date(this.delayTime).getTime()) - (new Date(this.endTime).getTime())) / (60 * 60 * 24 * 1000)
+        if(this.delayTime === ''){
+            return 0
+        }else{
+          return Math.abs(Math.ceil(((new Date(this.delayTime)).getTime()-(new Date(this.endTime)).getTime())/(1000*60*60*24)))
+        }
     }
   },
   methods: {
